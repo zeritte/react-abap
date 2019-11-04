@@ -1,39 +1,69 @@
 import {
-  INCREMENT_REQUESTED,
-  INCREMENT,
-  DECREMENT_REQUESTED,
-  DECREMENT
+  SIGN_IN,
+  SIGN_IN_SUCCESS,
+  SIGN_IN_FAIL,
+  SIGN_UP,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAIL
 } from './actions'
 
 const initialState = {
-  count: 0,
-  isIncrementing: false,
-  isDecrementing: false
+  signInLoading: false,
+  signUpLoading: false,
+  isLoggedIn: false,
+  loginError: null,
+  signUpError: null,
+  userId: null,
+  token: null
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case INCREMENT_REQUESTED:
+    case SIGN_IN:
       return {
         ...state,
-        isIncrementing: true
+        signInLoading: true,
+        loginError: null
       }
-    case INCREMENT:
+    case SIGN_IN_SUCCESS:
       return {
         ...state,
-        count: state.count + 1,
-        isIncrementing: !state.isIncrementing
+        signInLoading: false,
+        isLoggedIn: true,
+        userId: action.payload.id,
+        token: action.payload.authentication_token
       }
-    case DECREMENT_REQUESTED:
+    case SIGN_IN_FAIL:
       return {
         ...state,
-        isDecrementing: true
+        signInLoading: false,
+        isLoggedIn: false,
+        userId: null,
+        token: null,
+        loginError: action.payload.message
       }
-    case DECREMENT:
+    case SIGN_UP:
       return {
         ...state,
-        count: state.count - 1,
-        isDecrementing: !state.isDecrementing
+        signUpLoading: true,
+        signUpError: null
+      }
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        signUpLoading: false,
+        isLoggedIn: true,
+        userId: action.payload.id,
+        token: action.payload.authentication_token
+      }
+    case SIGN_UP_FAIL:
+      return {
+        ...state,
+        signUpLoading: false,
+        isLoggedIn: false,
+        userId: null,
+        token: null,
+        signUpError: action.payload.message
       }
     default:
       return state

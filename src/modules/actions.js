@@ -1,56 +1,35 @@
-export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED'
-export const INCREMENT = 'counter/INCREMENT'
-export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED'
-export const DECREMENT = 'counter/DECREMENT'
+import axios from 'axios'
 
-export const increment = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    })
+export const SIGN_IN = 'sign_in'
+export const SIGN_IN_SUCCESS = 'sign_in_success'
+export const SIGN_IN_FAIL = 'sign_in_fail'
+export const SIGN_UP = 'sign_up'
+export const SIGN_UP_SUCCESS = 'sign_up_success'
+export const SIGN_UP_FAIL = 'sign_up_fail'
+export const API_URL = 'http://localhost:3000/api/'
 
-    dispatch({
-      type: INCREMENT
+export const signIn = (email, password) => dispatch => {
+  dispatch({ type: SIGN_IN })
+  axios
+    .post(API_URL + 'sessions', { email, password })
+    .then(r => {
+      dispatch({ type: SIGN_IN_SUCCESS, payload: r.data })
     })
-  }
+    .catch(e => {
+      dispatch({ type: SIGN_IN_FAIL, payload: e.response.data })
+    })
 }
 
-export const incrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    })
-
-    return setTimeout(() => {
-      dispatch({
-        type: INCREMENT
+export const signUp = (name, email, password) => dispatch => {
+  dispatch({ type: SIGN_UP })
+  setTimeout(() => {
+    axios
+      .post(API_URL + 'registrations', { name, email, password })
+      .then(r => {
+        dispatch({ type: SIGN_UP_SUCCESS, payload: r.data })
       })
-    }, 3000)
-  }
-}
-
-export const decrement = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    })
-
-    dispatch({
-      type: DECREMENT
-    })
-  }
-}
-
-export const decrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    })
-
-    return setTimeout(() => {
-      dispatch({
-        type: DECREMENT
+      .catch(e => {
+        dispatch({ type: SIGN_UP_FAIL, payload: e.response.data })
       })
-    }, 3000)
-  }
+  }, 3000)
 }

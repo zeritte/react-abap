@@ -2,12 +2,6 @@ import React from 'react'
 import { push } from 'connected-react-router'
 
 import { connect } from 'react-redux'
-import {
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync
-} from '../../modules/actions'
 
 const Home = props => (
   <div>
@@ -45,10 +39,6 @@ const mapStateToProps = ({ main }) => ({
 export default connect(
   mapStateToProps,
   {
-    increment,
-    incrementAsync,
-    decrement,
-    decrementAsync,
     changePage: () => push('/about-us')
   }
 )(Home)
