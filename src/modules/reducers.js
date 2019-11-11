@@ -14,7 +14,8 @@ const initialState = {
   loginError: null,
   signUpError: null,
   userId: null,
-  token: null
+  token: null,
+  role: null
 }
 
 export default (state = initialState, action) => {
@@ -31,7 +32,8 @@ export default (state = initialState, action) => {
         signInLoading: false,
         isLoggedIn: true,
         userId: action.payload.id,
-        token: action.payload.authentication_token
+        token: action.payload.authentication_token,
+        role: action.payload.role
       }
     case SIGN_IN_FAIL:
       return {
@@ -40,6 +42,7 @@ export default (state = initialState, action) => {
         isLoggedIn: false,
         userId: null,
         token: null,
+        role: null,
         loginError: action.payload.message
       }
     case SIGN_UP:
@@ -54,7 +57,8 @@ export default (state = initialState, action) => {
         signUpLoading: false,
         isLoggedIn: true,
         userId: action.payload.id,
-        token: action.payload.authentication_token
+        token: action.payload.authentication_token,
+        role: action.payload.role
       }
     case SIGN_UP_FAIL:
       return {
@@ -63,6 +67,7 @@ export default (state = initialState, action) => {
         isLoggedIn: false,
         userId: null,
         token: null,
+        role: null,
         signUpError: action.payload.message
       }
     default:
