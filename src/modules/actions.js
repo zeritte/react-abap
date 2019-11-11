@@ -6,6 +6,7 @@ export const SIGN_IN_FAIL = 'sign_in_fail'
 export const SIGN_UP = 'sign_up'
 export const SIGN_UP_SUCCESS = 'sign_up_success'
 export const SIGN_UP_FAIL = 'sign_up_fail'
+export const LOGOUT = 'logout'
 export const API_URL = 'http://localhost:3000/api/'
 
 export const signIn = (email, password) => dispatch => {
@@ -32,4 +33,8 @@ export const signUp = (name, email, password) => dispatch => {
         dispatch({ type: SIGN_UP_FAIL, payload: e.response.data })
       })
   }, 3000)
+}
+
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT })
 }

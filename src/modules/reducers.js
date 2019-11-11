@@ -4,7 +4,8 @@ import {
   SIGN_IN_FAIL,
   SIGN_UP,
   SIGN_UP_SUCCESS,
-  SIGN_UP_FAIL
+  SIGN_UP_FAIL,
+  LOGOUT
 } from './actions'
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   signUpError: null,
   userId: null,
   token: null,
-  role: null
+  role: null,
+  name: null
 }
 
 export default (state = initialState, action) => {
@@ -33,7 +35,8 @@ export default (state = initialState, action) => {
         isLoggedIn: true,
         userId: action.payload.id,
         token: action.payload.authentication_token,
-        role: action.payload.role
+        role: action.payload.role,
+        name: action.payload.name
       }
     case SIGN_IN_FAIL:
       return {
@@ -43,6 +46,7 @@ export default (state = initialState, action) => {
         userId: null,
         token: null,
         role: null,
+        name: null,
         loginError: action.payload.message
       }
     case SIGN_UP:
@@ -58,7 +62,8 @@ export default (state = initialState, action) => {
         isLoggedIn: true,
         userId: action.payload.id,
         token: action.payload.authentication_token,
-        role: action.payload.role
+        role: action.payload.role,
+        name: action.payload.name
       }
     case SIGN_UP_FAIL:
       return {
@@ -68,7 +73,17 @@ export default (state = initialState, action) => {
         userId: null,
         token: null,
         role: null,
+        name: null,
         signUpError: action.payload.message
+      }
+    case LOGOUT:
+      return {
+        ...state,
+        isLoggedIn: false,
+        userId: null,
+        token: null,
+        role: null,
+        name: null
       }
     default:
       return state
