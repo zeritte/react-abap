@@ -110,9 +110,7 @@ export const CaseCard = ({ vfcase }) => {
               <Typography variant="subtitle1" paragraph>
                 {vfcase.description}
               </Typography>
-              <Typography variant="subtitle1" color="primary">
-                More info
-              </Typography>
+              <Typography color="primary">more info...</Typography>
             </CardContent>
           </div>
         </Card>

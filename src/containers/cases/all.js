@@ -34,7 +34,7 @@ const AllCases = props => {
             ) : props.allCasesLoading ? (
               <CircularProgress />
             ) : (
-              <Typography variant="subtitle1" paragraph>
+              <Typography variant="subtitle1" color="error" paragraph>
                 {props.allCasesError}
               </Typography>
             )}
