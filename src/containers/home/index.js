@@ -5,13 +5,11 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardContent from '@material-ui/core/CardContent'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
-import { Header } from '../../common'
+import { Header, CaseCard } from '../../common'
 import { connect } from 'react-redux'
 import { fetchAllCases } from '../../modules/actions'
 
@@ -72,9 +70,7 @@ const Home = props => {
   const [search, setSearch] = useState('')
   const filterCases = () => {
     if (search.length > 0)
-      return props.vfCasesDashboard.filter(vfcase =>
-        vfcase.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-      )
+      return props.allCases.filter(vfcase => vfcase.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
     return []
   }
   useEffect(() => {
@@ -86,7 +82,7 @@ const Home = props => {
       <Container maxWidth="lg">
         <main>
           <Header />
-          {/* Main featured post */}
+          {/* Begin search */}
           <Paper className={classes.mainFeaturedPost}>
             <div className={classes.overlay} />
             <Grid container>
@@ -107,43 +103,24 @@ const Home = props => {
               </Grid>
             </Grid>
           </Paper>
-          {/* End main featured post */}
-          {/* Sub featured posts */}
-          <Grid container spacing={4}>
-            {props.vfCasesDashboard ? (
-              filterCases().map(vfcase => (
-                <Grid item key={vfcase.id} xs={12} md={6}>
-                  <CardActionArea component="a" href={'/cases/' + vfcase.id}>
-                    <Card className={classes.card}>
-                      <div className={classes.cardDetails}>
-                        <CardContent>
-                          <Typography component="h2" variant="h5">
-                            {vfcase.name}
-                          </Typography>
-                          <Typography variant="subtitle1" color="textSecondary">
-                            {vfcase.date}
-                          </Typography>
-                          <Typography variant="subtitle1" paragraph>
-                            {vfcase.description}
-                          </Typography>
-                          <Typography variant="subtitle1" color="primary">
-                            More info
-                          </Typography>
-                        </CardContent>
-                      </div>
-                    </Card>
-                  </CardActionArea>
-                </Grid>
-              ))
-            ) : props.vfCasesDashboardLoading ? (
-              '...'
+          {/* End search */}
+          {/* Cases */}
+          <center>
+            {props.allCases ? (
+              <Grid container spacing={4}>
+                {filterCases().map(vfcase => (
+                  <CaseCard vfcase={vfcase} />
+                ))}
+              </Grid>
+            ) : props.allCasesLoading ? (
+              <CircularProgress />
             ) : (
               <Typography variant="subtitle1" paragraph>
-                {props.vfCasesDashboardError}
+                {props.allCasesError}
               </Typography>
             )}
-          </Grid>
-          {/* End sub featured posts */}
+            {/* Cases */}
+          </center>
         </main>
       </Container>
     </React.Fragment>
@@ -153,9 +130,9 @@ const Home = props => {
 const mapStateToProps = ({ main }) => ({
   role: main.role,
   name: main.name,
-  vfCasesDashboard: main.vfCasesDashboard,
-  vfCasesDashboardLoading: main.vfCasesDashboardLoading,
-  vfCasesDashboardError: main.vfCasesDashboardError
+  allCases: main.allCases,
+  allCasesLoading: main.allCasesLoading,
+  allCasesError: main.allCasesError
 })
 
 export default connect(

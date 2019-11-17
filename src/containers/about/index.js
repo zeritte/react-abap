@@ -10,9 +10,9 @@ const About = props => {
       <Container maxWidth="lg">
         <main>
           <Header />
-          <div>
-            <h1>About Page</h1>
-            <p>Will be filled out later on</p>
+          <div style={{ textAlign: 'center' }}>
+            <h1>About</h1>
+            <p>Developed by SDC Turkey</p>
           </div>
         </main>
       </Container>

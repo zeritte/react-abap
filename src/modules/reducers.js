@@ -21,9 +21,9 @@ const initialState = {
   token: null,
   role: null,
   name: null,
-  vfCasesDashboard: null,
-  vfCasesDashboardLoading: false,
-  vfCasesDashboardError: null
+  allCases: null,
+  allCasesLoading: false,
+  allCasesError: null
 }
 
 export default (state = initialState, action) => {
@@ -94,19 +94,19 @@ export default (state = initialState, action) => {
     case FETCH_ALL_CASES:
       return {
         ...state,
-        vfCasesDashboardLoading: true
+        allCasesLoading: true
       }
     case FETCH_ALL_CASES_SUCCESS:
       return {
         ...state,
-        vfCasesDashboard: action.payload,
-        vfCasesDashboardLoading: false
+        allCases: action.payload,
+        allCasesLoading: false
       }
     case FETCH_ALL_CASES_FAIL:
       return {
         ...state,
-        vfCasesDashboardError: "Could not fetch the data. Please contact to system admin.",
-        vfCasesDashboardLoading: false
+        allCasesError: "Could not fetch the data. Please contact to system admin.",
+        allCasesLoading: false
       }
     default:
       return state
