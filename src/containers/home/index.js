@@ -113,7 +113,7 @@ const Home = props => {
             {props.vfCasesDashboard ? (
               filterCases().map(vfcase => (
                 <Grid item key={vfcase.id} xs={12} md={6}>
-                  <CardActionArea component="a" href="#">
+                  <CardActionArea component="a" href="/cases/">
                     <Card className={classes.card}>
                       <div className={classes.cardDetails}>
                         <CardContent>
