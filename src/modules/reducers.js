@@ -5,7 +5,10 @@ import {
   SIGN_UP,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAIL,
-  LOGOUT
+  LOGOUT,
+  FETCH_ALL_CASES,
+  FETCH_ALL_CASES_SUCCESS,
+  FETCH_ALL_CASES_FAIL
 } from './actions'
 
 const initialState = {
@@ -17,7 +20,10 @@ const initialState = {
   userId: null,
   token: null,
   role: null,
-  name: null
+  name: null,
+  vfCasesDashboard: null,
+  vfCasesDashboardLoading: false,
+  vfCasesDashboardError: null
 }
 
 export default (state = initialState, action) => {
@@ -84,6 +90,23 @@ export default (state = initialState, action) => {
         token: null,
         role: null,
         name: null
+      }
+    case FETCH_ALL_CASES:
+      return {
+        ...state,
+        vfCasesDashboardLoading: true
+      }
+    case FETCH_ALL_CASES_SUCCESS:
+      return {
+        ...state,
+        vfCasesDashboard: action.payload,
+        vfCasesDashboardLoading: false
+      }
+    case FETCH_ALL_CASES_FAIL:
+      return {
+        ...state,
+        vfCasesDashboardError: "Could not fetch the data. Please contact to system admin.",
+        vfCasesDashboardLoading: false
       }
     default:
       return state

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { push } from 'connected-react-router'
 import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -8,31 +8,24 @@ import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Hidden from '@material-ui/core/Hidden'
-import Link from '@material-ui/core/Link'
+import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
 
+import { Header } from '../../common'
 import { connect } from 'react-redux'
+import { logout, fetchAllCases } from '../../modules/actions'
 
 const useStyles = makeStyles(theme => ({
   mainFeaturedPost: {
     position: 'relative',
-    backgroundColor: theme.palette.grey[800],
-    color: theme.palette.common.white,
-    marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://source.unsplash.com/user/erondu)',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
+    marginBottom: theme.spacing(4)
   },
   overlay: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     right: 0,
-    left: 0,
-    backgroundColor: 'rgba(0,0,0,.3)'
+    left: 0
   },
   mainFeaturedPostContent: {
     position: 'relative',
@@ -65,61 +58,51 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     marginTop: theme.spacing(8),
     padding: theme.spacing(6, 0)
+  },
+  textField: {
+    backgroundColor: 'white',
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 400
   }
 }))
 
-const featuredPosts = [
-  {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.'
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.'
-  }
-]
-
 const Home = props => {
   const classes = useStyles()
-
+  const [search, setSearch] = useState('')
+  const filterCases = () => {
+    if (search.length > 0)
+      return props.vfCasesDashboard.filter(vfcase =>
+        vfcase.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      )
+    return []
+  }
+  useEffect(() => {
+    props.fetchAllCases()
+  }, [])
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
         <main>
+          <Header isLoggedIn={props.isLoggedIn} logout={props.logout} />
           {/* Main featured post */}
           <Paper className={classes.mainFeaturedPost}>
-            {/* Increase the priority of the hero background image */}
-            {
-              <img
-                style={{ display: 'none' }}
-                src="https://source.unsplash.com/user/erondu"
-                alt="background"
-              />
-            }
             <div className={classes.overlay} />
             <Grid container>
-              <Grid item md={6}>
+              <Grid item md={8}>
                 <div className={classes.mainFeaturedPostContent}>
-                  <Typography
-                    component="h1"
-                    variant="h3"
-                    color="inherit"
-                    gutterBottom>
-                    Title of a longer featured blog post
+                  <Typography component="h1" variant="h3" gutterBottom>
+                    Virtual Forge Test Case Search
                   </Typography>
-                  <Typography variant="h5" color="inherit" paragraph>
-                    Multiple lines of text that form the lede, informing new
-                    readers quickly and efficiently about what&apos;s most
-                    interesting in this post&apos;s contents.
-                  </Typography>
-                  <Link variant="subtitle1" href="#">
-                    Continue reading…
-                  </Link>
+                  <TextField
+                    id="outlined-basic"
+                    className={classes.textField}
+                    label="Search"
+                    margin="normal"
+                    variant="outlined"
+                    onChange={e => setSearch(e.target.value)}
+                  />
                 </div>
               </Grid>
             </Grid>
@@ -127,57 +110,42 @@ const Home = props => {
           {/* End main featured post */}
           {/* Sub featured posts */}
           <Grid container spacing={4}>
-            {featuredPosts.map(post => (
-              <Grid item key={post.title} xs={12} md={6}>
-                <CardActionArea component="a" href="#">
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
-                        <Typography component="h2" variant="h5">
-                          {post.title}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                          {post.date}
-                        </Typography>
-                        <Typography variant="subtitle1" paragraph>
-                          {post.description}
-                        </Typography>
-                        <Typography variant="subtitle1" color="primary">
-                          Continue reading...
-                        </Typography>
-                      </CardContent>
-                    </div>
-                    <Hidden xsDown>
-                      <CardMedia
-                        className={classes.cardMedia}
-                        image="https://source.unsplash.com/random"
-                        title="Image title"
-                      />
-                    </Hidden>
-                  </Card>
-                </CardActionArea>
-              </Grid>
-            ))}
+            {props.vfCasesDashboard ? (
+              filterCases().map(vfcase => (
+                <Grid item key={vfcase.id} xs={12} md={6}>
+                  <CardActionArea component="a" href="#">
+                    <Card className={classes.card}>
+                      <div className={classes.cardDetails}>
+                        <CardContent>
+                          <Typography component="h2" variant="h5">
+                            {vfcase.name}
+                          </Typography>
+                          <Typography variant="subtitle1" color="textSecondary">
+                            {vfcase.date}
+                          </Typography>
+                          <Typography variant="subtitle1" paragraph>
+                            {vfcase.description}
+                          </Typography>
+                          <Typography variant="subtitle1" color="primary">
+                            More info
+                          </Typography>
+                        </CardContent>
+                      </div>
+                    </Card>
+                  </CardActionArea>
+                </Grid>
+              ))
+            ) : props.vfCasesDashboardLoading ? (
+              '...'
+            ) : (
+              <Typography variant="subtitle1" paragraph>
+                {props.vfCasesDashboardError}
+              </Typography>
+            )}
           </Grid>
           {/* End sub featured posts */}
         </main>
       </Container>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Container maxWidth="lg">
-          <Typography variant="h6" align="center" gutterBottom>
-            Footer
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="textSecondary"
-            component="p">
-            Something here to give the footer a purpose!
-          </Typography>
-        </Container>
-      </footer>
-      {/* End footer */}
     </React.Fragment>
   )
 }
@@ -185,12 +153,17 @@ const Home = props => {
 const mapStateToProps = ({ main }) => ({
   role: main.role,
   name: main.name,
-  isLoggedIn: main.isLoggedIn
+  isLoggedIn: main.isLoggedIn,
+  vfCasesDashboard: main.vfCasesDashboard,
+  vfCasesDashboardLoading: main.vfCasesDashboardLoading,
+  vfCasesDashboardError: main.vfCasesDashboardError
 })
 
 export default connect(
   mapStateToProps,
   {
+    fetchAllCases,
+    logout,
     goToAbout: () => push('/about-us')
   }
 )(Home)

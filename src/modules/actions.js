@@ -8,6 +8,9 @@ export const SIGN_UP_SUCCESS = 'sign_up_success'
 export const SIGN_UP_FAIL = 'sign_up_fail'
 export const LOGOUT = 'logout'
 export const API_URL = 'http://localhost:3000/api/'
+export const FETCH_ALL_CASES = 'fetch_all_cases'
+export const FETCH_ALL_CASES_SUCCESS = 'fetch_all_cases_success'
+export const FETCH_ALL_CASES_FAIL = 'fetch_all_cases_fail'
 
 export const signIn = (email, password) => dispatch => {
   dispatch({ type: SIGN_IN })
@@ -23,18 +26,28 @@ export const signIn = (email, password) => dispatch => {
 
 export const signUp = (name, email, password) => dispatch => {
   dispatch({ type: SIGN_UP })
-  setTimeout(() => {
-    axios
-      .post(API_URL + 'registrations', { user: { name, email, password } })
-      .then(r => {
-        dispatch({ type: SIGN_UP_SUCCESS, payload: r.data })
-      })
-      .catch(e => {
-        dispatch({ type: SIGN_UP_FAIL, payload: e.response.data })
-      })
-  }, 3000)
+  axios
+    .post(API_URL + 'registrations', { user: { name, email, password } })
+    .then(r => {
+      dispatch({ type: SIGN_UP_SUCCESS, payload: r.data })
+    })
+    .catch(e => {
+      dispatch({ type: SIGN_UP_FAIL, payload: e.response.data })
+    })
 }
 
 export const logout = () => dispatch => {
   dispatch({ type: LOGOUT })
+}
+
+export const fetchAllCases = () => dispatch => {
+  dispatch({ type: FETCH_ALL_CASES })
+  axios
+    .get(API_URL + 'vf_cases_all')
+    .then(r => {
+      dispatch({ type: FETCH_ALL_CASES_SUCCESS, payload: r.data })
+    })
+    .catch(e => {
+      dispatch({ type: FETCH_ALL_CASES_FAIL, payload: e.response.data })
+    })
 }
