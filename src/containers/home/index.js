@@ -13,7 +13,7 @@ import Container from '@material-ui/core/Container'
 
 import { Header } from '../../common'
 import { connect } from 'react-redux'
-import { logout, fetchAllCases } from '../../modules/actions'
+import { fetchAllCases } from '../../modules/actions'
 
 const useStyles = makeStyles(theme => ({
   mainFeaturedPost: {
@@ -85,7 +85,7 @@ const Home = props => {
       <CssBaseline />
       <Container maxWidth="lg">
         <main>
-          <Header isLoggedIn={props.isLoggedIn} logout={props.logout} />
+          <Header />
           {/* Main featured post */}
           <Paper className={classes.mainFeaturedPost}>
             <div className={classes.overlay} />
@@ -113,7 +113,7 @@ const Home = props => {
             {props.vfCasesDashboard ? (
               filterCases().map(vfcase => (
                 <Grid item key={vfcase.id} xs={12} md={6}>
-                  <CardActionArea component="a" href="/cases/">
+                  <CardActionArea component="a" href={'/cases/' + vfcase.id}>
                     <Card className={classes.card}>
                       <div className={classes.cardDetails}>
                         <CardContent>
@@ -153,7 +153,6 @@ const Home = props => {
 const mapStateToProps = ({ main }) => ({
   role: main.role,
   name: main.name,
-  isLoggedIn: main.isLoggedIn,
   vfCasesDashboard: main.vfCasesDashboard,
   vfCasesDashboardLoading: main.vfCasesDashboardLoading,
   vfCasesDashboardError: main.vfCasesDashboardError
@@ -163,7 +162,6 @@ export default connect(
   mapStateToProps,
   {
     fetchAllCases,
-    logout,
     goToAbout: () => push('/about-us')
   }
 )(Home)

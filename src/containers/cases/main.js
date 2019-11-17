@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import { Header } from '../../common'
 
-const About = props => {
+const Cases = props => {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -11,7 +11,7 @@ const About = props => {
         <main>
           <Header />
           <div>
-            <h1>About Page</h1>
+            <h1>Cases Page</h1>
             <p>Will be filled out later on</p>
           </div>
         </main>
@@ -20,4 +20,4 @@ const About = props => {
   )
 }
 
-export default About
+export default Cases

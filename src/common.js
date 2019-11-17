@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Toolbar from '@material-ui/core/Toolbar'
 import Link from '@material-ui/core/Link'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core/styles'
+import { logout } from './modules/actions'
+import { store } from './store'
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -31,7 +33,12 @@ const useStyles = makeStyles(theme => ({
 
 const sections = [{ name: 'Home', href: '/' }, { name: 'About', href: '/about' }, { name: 'Cases', href: '/cases' }]
 
-export const Header = ({ isLoggedIn, logout }) => {
+export const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  useEffect(() => {
+    setIsLoggedIn(store.getState().main.isLoggedIn)
+  }, [store.getState().main])
+  const logOut = () => store.dispatch(logout())
   const classes = useStyles()
   return (
     <div>
@@ -43,7 +50,7 @@ export const Header = ({ isLoggedIn, logout }) => {
           VF Cookbook
         </Typography>
         {isLoggedIn ? (
-          <Button style={{ flex: 0.5 }} onClick={logout} variant="outlined" size="small">
+          <Button style={{ flex: 0.5 }} onClick={logOut} variant="outlined" size="small">
             Sign out
           </Button>
         ) : (

@@ -91,15 +91,14 @@ const SignIn = props => {
               autoComplete="current-password"
               value={password}
               onChange={e => setPassword(e.target.value)}
+              onKeyDown={e => (e.keyCode === 13 ? signIn() : null)}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             /> */}
             <Grid item xs>
-              <Typography style={{ color: 'darkred' }}>
-                {props.loginError}
-              </Typography>
+              <Typography style={{ color: 'darkred' }}>{props.loginError}</Typography>
             </Grid>
             <Button
               onClick={signIn}
