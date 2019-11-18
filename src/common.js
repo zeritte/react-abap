@@ -104,12 +104,17 @@ export const CaseCard = ({ vfcase }) => {
               <Typography component="h2" variant="h5">
                 {vfcase.name}
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {vfcase.date}
-              </Typography>
-              <Typography variant="subtitle1" paragraph>
-                {vfcase.description}
-              </Typography>
+              <Grid style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                <Typography variant="h6" color="textSecondary">
+                  {vfcase.domain}
+                </Typography>
+                <Typography variant="h6" color="textSecondary">
+                  {vfcase.impact}
+                </Typography>
+                <Typography variant="h6" color="textSecondary">
+                  {vfcase.type}
+                </Typography>
+              </Grid>
               <Typography color="primary">more info...</Typography>
             </CardContent>
           </div>

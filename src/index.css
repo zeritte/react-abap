@@ -28,13 +28,13 @@ button:disabled {
 
 .acediff__gutter {
   flex: 0 0 60px;
-  border-left: 1px solid #999;
-  border-right: 1px solid #999;
+  border-left: 1px solid rgb(39,39,39);
+  border-right: 1px solid rgb(39,39,39);
   background-color: #efefef;
   overflow: hidden;
 }
 .acediff__gutter svg {
-  background-color: #efefef;
+  background-color: rgb(39,39,39);
 }
 .acediff__left,
 .acediff__right {
@@ -42,21 +42,21 @@ button:disabled {
   flex: 1;
 }
 .acediff__diffLine {
-  background-color: #d8f2ff;
-  border-top: 1px solid #a2d7f2;
-  border-bottom: 1px solid #a2d7f2;
+  background-color: rgb(0,77,122);
+  border-top: 1px solid rgb(0,77,122);
+  border-bottom: 1px solid rgb(0,77,122);
   position: absolute;
   z-index: 4;
 }
 .acediff__diffLine.targetOnly {
   height: 0px !important;
-  border-top: 1px solid #a2d7f2;
+  border-top: 1px solid rgb(0,77,122);
   border-bottom: 0px;
   position: absolute;
 }
 .acediff__connector {
-  fill: #d8f2ff;
-  stroke: #a2d7f2;
+  fill: rgb(0,77,122);
+  stroke: rgb(0,77,122);
 }
 .acediff__copy--right,
 .acediff__copy--left {
