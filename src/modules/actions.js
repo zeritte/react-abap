@@ -43,7 +43,7 @@ export const logout = () => dispatch => {
 export const fetchAllCases = () => dispatch => {
   dispatch({ type: FETCH_ALL_CASES })
   axios
-    .get(API_URL + 'vf_cases_all')
+    .get(API_URL + 'vf_cases')
     .then(r => {
       dispatch({ type: FETCH_ALL_CASES_SUCCESS, payload: r.data })
     })
