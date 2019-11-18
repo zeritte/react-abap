@@ -4,16 +4,15 @@ import Container from '@material-ui/core/Container'
 import { Header } from '../../common'
 import AceDiff from 'ace-diff'
 
-// import 'ace-builds/src-noconflict/theme-monokai'
-// import 'ace-builds/src-noconflict/mode-abap'
+import 'ace-diff/dist/ace-diff.min.css'
 
 const ParticularCase = props => {
   useEffect(() => {
     new AceDiff({
       element: '#editor',
       left: {
-        content: 'SELECT text 1',
-        editable: true,
+        content: 'SELECT text 1 function()',
+        editable: false,
         copyLinkEnabled: false
       },
       right: {
@@ -22,8 +21,8 @@ const ParticularCase = props => {
         copyLinkEnabled: false
       },
       autoScrollEditorIntoView: true,
-      // theme: 'monokai',
-      // mode: 'abap',
+      mode: 'ace/mode/abap',
+      theme: 'ace/theme/monokai',
       minLines: 10,
       maxLines: 30
     })
@@ -37,8 +36,8 @@ const ParticularCase = props => {
           <Header />
           <div style={{ width: '100%' }}>
             <h1>Case {case_id} Page</h1>
-            <div style={{ position: 'relative', margin: '0 auto', height: 200, width: '50%' }}>
-              {/* <div id="editor" className="acediff" /> */}
+            <div style={{ position: 'relative', margin: '0 auto', height: 300, width: '70%' }}>
+              <div id="editor" className="acediff" />
             </div>
           </div>
         </main>
