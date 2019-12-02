@@ -51,18 +51,29 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 3)
   }
 }))
-
-const sections = [
+const sectionsNotAdmin = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Cases', href: '/cases' }
 ]
-
+const sectionsAdmin = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Cases', href: '/cases' },
+  { name: 'Solutions in review', href: '/solutions_in_review' }
+]
 export const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [role, setRole] = useState(null)
+  const [sections, setSections] = useState([])
   useEffect(() => {
     setIsLoggedIn(store.getState().main.isLoggedIn)
-  }, [store.getState().main])
+    setRole(store.getState().main.role)
+  }, [store.getState()])
+  useEffect(() => {
+    if ((role === 'admin') | (role === 'editor')) setSections(sectionsAdmin)
+    else setSections(sectionsNotAdmin)
+  }, [role])
   const logOut = () => store.dispatch(logout())
   const classes = useStyles()
   return (

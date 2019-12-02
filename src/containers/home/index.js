@@ -134,6 +134,7 @@ const Home = props => {
 const mapStateToProps = ({ main }) => ({
   role: main.role,
   name: main.name,
+  isLoggedIn: main.isLoggedIn,
   allCases: main.allCases,
   allCasesLoading: main.allCasesLoading,
   allCasesError: main.allCasesError

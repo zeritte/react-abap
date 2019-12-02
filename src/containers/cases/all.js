@@ -46,6 +46,8 @@ const AllCases = props => {
 }
 
 const mapStateToProps = ({ main }) => ({
+  role: main.role,
+  isLoggedIn: main.isLoggedIn,
   allCases: main.allCases,
   allCasesLoading: main.allCasesLoading,
   allCasesError: main.allCasesError

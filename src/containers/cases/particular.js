@@ -60,6 +60,16 @@ const ParticularCase = props => {
               <div id={`editor${solution.id}`} className="acediff" />
             </div>
             <p>{solution.footnote_en}</p>
+            <div
+              key="other-details"
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+              }}>
+              <p>Author: {solution.created_by}</p>
+              <p>Created At: {solution.created_at}</p>
+            </div>
           </div>
         )
       })
@@ -115,10 +125,11 @@ const ParticularCase = props => {
 }
 
 const mapStateToProps = ({ main }) => ({
+  name: main.name,
+  isLoggedIn: main.isLoggedIn,
   particularCase: main.particularCase,
   particularCaseLoading: main.particularCaseLoading,
-  particularCaseError: main.particularCaseError,
-  isLoggedIn: main.isLoggedIn
+  particularCaseError: main.particularCaseError
 })
 
 export default connect(

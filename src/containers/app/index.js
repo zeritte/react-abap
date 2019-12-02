@@ -5,6 +5,8 @@ import About from '../about'
 import { SignIn, SignUp } from '../session'
 import { AllCases, ParticularCase } from '../cases/'
 
+import { connect } from 'react-redux'
+
 const App = () => {
   return (
     <main>
@@ -18,4 +20,10 @@ const App = () => {
   )
 }
 
-export default App
+const mapStateToProps = ({ main }) => ({
+  role: main.role,
+  name: main.name,
+  isLoggedIn: main.isLoggedIn
+})
+
+export default connect(mapStateToProps)(App)
