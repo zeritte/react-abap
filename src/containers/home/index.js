@@ -143,6 +143,6 @@ export default connect(
   mapStateToProps,
   {
     fetchAllCases,
-    goToAbout: () => push('/about-us')
+    goToAbout: () => push('/about')
   }
 )(Home)

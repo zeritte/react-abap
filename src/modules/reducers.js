@@ -8,7 +8,10 @@ import {
   LOGOUT,
   FETCH_ALL_CASES,
   FETCH_ALL_CASES_SUCCESS,
-  FETCH_ALL_CASES_FAIL
+  FETCH_ALL_CASES_FAIL,
+  FETCH_PARTICULAR_CASE,
+  FETCH_PARTICULAR_CASE_SUCCESS,
+  FETCH_PARTICULAR_CASE_FAIL
 } from './actions'
 
 const initialState = {
@@ -23,7 +26,10 @@ const initialState = {
   name: null,
   allCases: null,
   allCasesLoading: false,
-  allCasesError: null
+  allCasesError: null,
+  particularCase: null,
+  particularCaseLoading: false,
+  particularCaseError: null
 }
 
 export default (state = initialState, action) => {
@@ -105,8 +111,27 @@ export default (state = initialState, action) => {
     case FETCH_ALL_CASES_FAIL:
       return {
         ...state,
-        allCasesError: "Could not fetch the data. Please contact to system admin.",
+        allCasesError:
+          'Could not fetch the data. Please contact to system admin.',
         allCasesLoading: false
+      }
+    case FETCH_PARTICULAR_CASE:
+      return {
+        ...state,
+        particularCaseLoading: true
+      }
+    case FETCH_PARTICULAR_CASE_SUCCESS:
+      return {
+        ...state,
+        particularCase: action.payload,
+        particularCaseLoading: false
+      }
+    case FETCH_PARTICULAR_CASE_FAIL:
+      return {
+        ...state,
+        particularCaseError:
+          'Could not fetch the data. Please contact to system admin.',
+        particularCaseLoading: false
       }
     default:
       return state

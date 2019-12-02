@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+// import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
@@ -10,10 +10,10 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { connect } from 'react-redux'
 import { fetchAllCases } from '../../modules/actions'
 
-const useStyles = makeStyles(theme => ({}))
+//const useStyles = makeStyles(theme => ({}))
 
 const AllCases = props => {
-  const classes = useStyles()
+  //const classes = useStyles()
   useEffect(() => {
     props.fetchAllCases()
   }, [])
@@ -28,7 +28,7 @@ const AllCases = props => {
             {props.allCases ? (
               <Grid container spacing={4}>
                 {props.allCases.map(vfcase => (
-                  <CaseCard vfcase={vfcase} />
+                  <CaseCard key={vfcase.id} vfcase={vfcase} />
                 ))}
               </Grid>
             ) : props.allCasesLoading ? (

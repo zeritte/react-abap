@@ -5,7 +5,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif;
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -28,13 +29,13 @@ button:disabled {
 
 .acediff__gutter {
   flex: 0 0 60px;
-  border-left: 1px solid rgb(39,39,39);
-  border-right: 1px solid rgb(39,39,39);
+  border-left: 1px solid rgb(39, 39, 39);
+  border-right: 1px solid rgb(39, 39, 39);
   background-color: #efefef;
   overflow: hidden;
 }
 .acediff__gutter svg {
-  background-color: rgb(39,39,39);
+  background-color: rgb(39, 39, 39);
 }
 .acediff__left,
 .acediff__right {
@@ -42,21 +43,21 @@ button:disabled {
   flex: 1;
 }
 .acediff__diffLine {
-  background-color: rgb(0,77,122);
-  border-top: 1px solid rgb(0,77,122);
-  border-bottom: 1px solid rgb(0,77,122);
+  background-color: rgb(0, 77, 122);
+  border-top: 1px solid rgb(0, 77, 122);
+  border-bottom: 1px solid rgb(0, 77, 122);
   position: absolute;
   z-index: 4;
 }
 .acediff__diffLine.targetOnly {
   height: 0px !important;
-  border-top: 1px solid rgb(0,77,122);
+  border-top: 1px solid rgb(0, 77, 122);
   border-bottom: 0px;
   position: absolute;
 }
 .acediff__connector {
-  fill: rgb(0,77,122);
-  stroke: rgb(0,77,122);
+  fill: rgb(0, 77, 122);
+  stroke: rgb(0, 77, 122);
 }
 .acediff__copy--right,
 .acediff__copy--left {
@@ -81,4 +82,10 @@ button:disabled {
 }
 .acediff__copy--left div:hover {
   color: #c98100;
+}
+
+.codeMarker {
+  background: #fff677;
+  position: absolute;
+  z-index: 20;
 }
