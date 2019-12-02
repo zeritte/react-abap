@@ -49,7 +49,21 @@ const ParticularCase = props => {
       .filter(solution => solution.is_approved)
       .map(solution => {
         return (
-          <div key={`editor${solution.id}`}>
+          <div
+            style={{
+              border: '1px solid',
+              borderRadius: 10,
+              marginBottom: 20
+            }}
+            key={`editor${solution.id}`}>
+            {props.userId === solution.created_by_id ? (
+              <Button
+                onClick={() => console.log('edit click')}
+                color="secondary"
+                style={{ position: 'absolute', right: '50px' }}>
+                Edit
+              </Button>
+            ) : null}
             <div
               style={{
                 position: 'relative',
@@ -127,6 +141,7 @@ const ParticularCase = props => {
 const mapStateToProps = ({ main }) => ({
   name: main.name,
   isLoggedIn: main.isLoggedIn,
+  userId: main.userId,
   particularCase: main.particularCase,
   particularCaseLoading: main.particularCaseLoading,
   particularCaseError: main.particularCaseError
