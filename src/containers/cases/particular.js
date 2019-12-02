@@ -12,7 +12,7 @@ require('brace/theme/monokai')
 require('brace/mode/abap')
 
 const ParticularCase = props => {
-  const [showAddSolutionModal, setShowAddSolutionModal] = useState(true)
+  const [showAddSolutionModal, setShowAddSolutionModal] = useState(false)
   const { case_id } = props.match.params
   useEffect(() => {
     props.fetchParticularcase(case_id)

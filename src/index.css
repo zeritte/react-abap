@@ -89,3 +89,7 @@ button:disabled {
   position: absolute;
   z-index: 20;
 }
+
+.ck-editor__editable {
+  height: 200px !important;
+}

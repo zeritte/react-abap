@@ -15,6 +15,8 @@ import { store } from './store'
 import { diff as DiffEditor } from 'react-ace'
 import 'ace-builds/src-noconflict/mode-abap'
 import 'ace-builds/src-noconflict/theme-github'
+import CKEditor from '@ckeditor/ckeditor5-react'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -39,9 +41,12 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     position: 'absolute',
-    width: 800,
+    width: '80%',
+    height: '80%',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
+    overflow: 'scroll',
+    display: 'block',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
   }
@@ -178,7 +183,7 @@ export const CaseCard = ({ vfcase }) => {
 export const AddSolutionModal = ({ handleClose, show, caseName }) => {
   const classes = useStyles()
   const [code, setCode] = useState(['wrong code here', 'fixed version here'])
-
+  const [footnote, setFootnote] = useState('')
   return (
     <Modal aria-labelledby="title" aria-describedby="description" open={show}>
       <div
@@ -193,16 +198,31 @@ export const AddSolutionModal = ({ handleClose, show, caseName }) => {
         <DiffEditor
           value={code}
           onChange={e => setCode(e)}
-          height="400px"
-          width="650px"
+          height="300px"
+          width="100%"
           mode="abap"
           name="diff-editor"
           theme="github"
         />
         <p id="footnote">Footnote</p>
-        <Button style={{ marginLeft: 650 }} onClick={handleClose}>
-          Close
-        </Button>
+        <CKEditor
+          editor={ClassicEditor}
+          onChange={(event, editor) => setFootnote(editor.getData())}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 20,
+            justifyContent: 'space-between'
+          }}>
+          <Button color="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button color="primary" onClick={handleClose}>
+            Save
+          </Button>
+        </div>
       </div>
     </Modal>
   )
