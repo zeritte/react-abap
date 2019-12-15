@@ -66,3 +66,11 @@ export const fetchParticularcase = id => dispatch => {
       dispatch({ type: FETCH_PARTICULAR_CASE_FAIL, payload: e.response.data })
     })
 }
+
+export const addSolution = params => dispatch => {
+  console.log(params)
+}
+
+export const saveSolution = params => dispatch => {
+  console.log(params)
+}

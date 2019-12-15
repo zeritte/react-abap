@@ -191,10 +191,19 @@ export const CaseCard = ({ vfcase }) => {
   )
 }
 
-export const AddSolutionModal = ({ handleClose, show, caseName }) => {
+export const AddSolutionModal = ({
+  handleClose,
+  show,
+  caseName,
+  saveFunction
+}) => {
   const classes = useStyles()
   const [code, setCode] = useState(['wrong code here', 'fixed version here'])
   const [footnote, setFootnote] = useState('')
+  useEffect(() => {
+    if (!show) setCode(['wrong code here', 'fixed version here'])
+  }, [show])
+  const handleSave = () => saveFunction({ code, footnote })
   return (
     <Modal aria-labelledby="title" aria-describedby="description" open={show}>
       <div
@@ -230,7 +239,69 @@ export const AddSolutionModal = ({ handleClose, show, caseName }) => {
           <Button color="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button color="primary" onClick={handleClose}>
+          <Button color="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
+
+export const EditSolutionModal = ({
+  handleClose,
+  show,
+  caseName,
+  saveFunction,
+  _footnote,
+  before,
+  after
+}) => {
+  useEffect(() => {
+    setCode([before, after])
+    setFootnote(_footnote)
+  }, [show])
+  const classes = useStyles()
+  const [code, setCode] = useState(['', ''])
+  const [footnote, setFootnote] = useState('')
+  const handleSave = () => saveFunction({ code, footnote })
+  return (
+    <Modal aria-labelledby="title" aria-describedby="description" open={true}>
+      <div
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+        className={classes.paper}>
+        <h2 id="title">Edit the solution for case '{caseName}'</h2>
+        <p id="description">Before & After</p>
+        <DiffEditor
+          value={code}
+          onChange={e => setCode(e)}
+          height="300px"
+          width="100%"
+          mode="abap"
+          name="diff-editor"
+          theme="github"
+        />
+        <p id="footnote">Footnote</p>
+        <CKEditor
+          onInit={editor => editor.setData(_footnote)}
+          editor={ClassicEditor}
+          onChange={(event, editor) => setFootnote(editor.getData())}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 20,
+            justifyContent: 'space-between'
+          }}>
+          <Button color="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button color="primary" onClick={handleSave}>
             Save
           </Button>
         </div>
