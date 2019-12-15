@@ -5,6 +5,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 import { Header, AddSolutionModal } from '../../common'
 import AceDiff from 'ace-diff'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import { Carousel } from 'react-responsive-carousel'
 
 import { connect } from 'react-redux'
 import { fetchParticularcase } from '../../modules/actions'
@@ -45,48 +47,53 @@ const ParticularCase = props => {
   }, [props.particularCase])
 
   const renderSolutions = () => {
-    return props.particularCase.solutions
-      .filter(solution => solution.is_approved)
-      .map(solution => {
-        return (
-          <div
-            style={{
-              border: '1px solid',
-              borderRadius: 10,
-              marginBottom: 20
-            }}
-            key={`editor${solution.id}`}>
-            {props.userId === solution.created_by_id ? (
-              <Button
-                onClick={() => console.log('edit click')}
-                color="secondary"
-                style={{ position: 'absolute', right: '50px' }}>
-                Edit
-              </Button>
-            ) : null}
-            <div
-              style={{
-                position: 'relative',
-                margin: '0 auto',
-                height: 300,
-                width: '80%'
-              }}>
-              <div id={`editor${solution.id}`} className="acediff" />
-            </div>
-            <p>{solution.footnote_en}</p>
-            <div
-              key="other-details"
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-              }}>
-              <p>Author: {solution.created_by}</p>
-              <p>Created At: {solution.created_at}</p>
-            </div>
-          </div>
-        )
-      })
+    return (
+      <Carousel showThumbs={false} useKeyboardArrows>
+        {props.particularCase.solutions
+          .filter(solution => solution.is_approved)
+          .map(solution => {
+            return (
+              <div
+                style={{
+                  border: '1px solid',
+                  padding: 30,
+                  height: '100%',
+                  backgroundColor: 'white'
+                }}
+                key={`editor${solution.id}`}>
+                {props.userId === solution.created_by_id ? (
+                  <Button
+                    onClick={() => console.log('edit click')}
+                    color="secondary"
+                    style={{ position: 'absolute', right: '50px' }}>
+                    Edit
+                  </Button>
+                ) : null}
+                <div
+                  style={{
+                    position: 'relative',
+                    margin: '0 auto',
+                    height: 300,
+                    width: '80%'
+                  }}>
+                  <div id={`editor${solution.id}`} className="acediff" />
+                </div>
+                <p>{solution.footnote_en}</p>
+                <div
+                  key="other-details"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                  }}>
+                  <p>Author: {solution.created_by}</p>
+                  <p>Created At: {solution.created_at}</p>
+                </div>
+              </div>
+            )
+          })}
+      </Carousel>
+    )
   }
 
   const clickOnAdd = () => {
@@ -124,7 +131,7 @@ const ParticularCase = props => {
                     __html: props.particularCase.content_en
                   }}
                 />
-                {renderSolutions()}
+                <div style={{ paddingBottom: 50 }}>{renderSolutions()}</div>
               </div>
             </div>
           ) : (

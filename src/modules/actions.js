@@ -63,7 +63,6 @@ export const fetchParticularcase = id => dispatch => {
       dispatch({ type: FETCH_PARTICULAR_CASE_SUCCESS, payload: r.data })
     })
     .catch(e => {
-      console.log(e)
       dispatch({ type: FETCH_PARTICULAR_CASE_FAIL, payload: e.response.data })
     })
 }
