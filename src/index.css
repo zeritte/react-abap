@@ -138,3 +138,7 @@ button:disabled {
   color: #000 !important;
   text-shadow: none !important;
 }
+
+.dot {
+  background-color: #000 !important;
+}
