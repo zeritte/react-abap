@@ -1,22 +1,52 @@
-import React, { useEffect } from 'react'
-// import { makeStyles } from '@material-ui/core/styles'
+import React, { useState, useEffect } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import { Header, CaseCard } from '../../common'
+import { Header, CaseCard, AddCaseModal } from '../../common'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 import { connect } from 'react-redux'
-import { fetchAllCases } from '../../modules/actions'
-
-//const useStyles = makeStyles(theme => ({}))
+import { fetchAllCases, addCase } from '../../modules/actions'
 
 const AllCases = props => {
-  //const classes = useStyles()
   useEffect(() => {
     props.fetchAllCases()
   }, [])
+  const [showAddCaseModal, setShowAddCaseModal] = useState(false)
+  const [alert, setAlert] = useState(null)
+  const alertUser = () => {
+    if (!!alert)
+      return (
+        <Dialog
+          open={!!alert}
+          onClose={() => setAlert(null)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+          <DialogTitle id="alert-dialog-title">{alert.title}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {alert.description}
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+      )
+  }
+  const addModal = () => (
+    <AddCaseModal
+      show={showAddCaseModal}
+      saveFunction={params => {
+        props.addCase({ ...params }, setAlert)
+        setShowAddCaseModal(false)
+      }}
+      handleClose={() => setShowAddCaseModal(false)}
+    />
+  )
   return (
     <React.Fragment>
       <CssBaseline />
@@ -24,7 +54,16 @@ const AllCases = props => {
         <main>
           <Header />
           <center>
-            <h1>All Cases</h1>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <Button style={{ flex: 0.2 }}> </Button>
+              <h1 style={{ flex: 1 }}>All Cases</h1>
+              <Button
+                style={{ flex: 0.2 }}
+                disabled={props.role === 'member' || !props.isLoggedIn}
+                onClick={() => setShowAddCaseModal(true)}>
+                <h3>Add case</h3>
+              </Button>
+            </div>
             {props.allCases ? (
               <Grid container spacing={4}>
                 {props.allCases.map(vfcase => (
@@ -38,6 +77,8 @@ const AllCases = props => {
                 {props.allCasesError}
               </Typography>
             )}
+            {alertUser()}
+            {addModal()}
           </center>
         </main>
       </Container>
@@ -55,5 +96,5 @@ const mapStateToProps = ({ main }) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchAllCases }
+  { fetchAllCases, addCase }
 )(AllCases)

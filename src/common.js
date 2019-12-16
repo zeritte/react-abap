@@ -321,6 +321,59 @@ export const EditSolutionModal = ({
   )
 }
 
+export const AddCaseModal = ({ show, handleClose, saveFunction }) => {
+  const classes = useStyles()
+  useEffect(() => {
+    if (!show) {
+      setTitle('')
+      setDescription('')
+    }
+  }, [show])
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const handleSave = () =>
+    saveFunction({ name: title, content_en: description })
+  return (
+    <Modal aria-labelledby="title" aria-describedby="description" open={show}>
+      <div
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+        className={classes.paper}>
+        <h2 id="title">Add case</h2>
+        <h3 id="title-edit">Title</h3>
+        <TextField
+          fullWidth
+          id="standard-required"
+          defaultValue={title}
+          onChange={e => setTitle(e.target.value)}
+        />
+        <h3 id="desc">Description</h3>
+        <CKEditor
+          editor={ClassicEditor}
+          onChange={(event, editor) => setDescription(editor.getData())}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 20,
+            justifyContent: 'space-between'
+          }}>
+          <Button color="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button color="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
+
 export const EditCaseModal = ({
   show,
   handleClose,
@@ -349,10 +402,8 @@ export const EditCaseModal = ({
         <h2 id="title">Edit case</h2>
         <h3 id="title-edit">Title</h3>
         <TextField
-          required
           fullWidth
           id="standard-required"
-          label="Required"
           defaultValue={title}
           onChange={e => setTitle(e.target.value)}
         />

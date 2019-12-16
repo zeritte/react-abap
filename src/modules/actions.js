@@ -80,7 +80,7 @@ export const addSolution = (params, setAlert) => (dispatch, getState) => {
     })
     .catch(e => {
       setAlert({
-        title: 'Solution cannot be added.',
+        title: 'Solution can not be added.',
         description: e.response.data.message[0]
       })
     })
@@ -102,21 +102,28 @@ export const updateSolution = (params, solutionId, setAlert) => (
     })
     .catch(e => {
       setAlert({
-        title: 'Solution cannot be updated.',
-        description: e.response.data.message[0]
+        title: 'Solution can not be updated.',
+        description: e.response.data.message
       })
     })
 }
 
-export const addCase = params => (dispatch, getState) => {
+export const addCase = (params, setAlert) => (dispatch, getState) => {
   axios.defaults.headers.common['token'] = getState().main.token
   axios
     .post(API_URL + 'vf_cases', { vf_case: params })
     .then(r => {
+      setAlert({
+        title: 'Case is created successfully!',
+        description: r.data.message
+      })
       dispatch(fetchAllCases())
     })
     .catch(e => {
-      console.log(e)
+      setAlert({
+        title: 'Case can not be created.',
+        description: e.response.data.message
+      })
     })
 }
 
@@ -126,7 +133,7 @@ export const updateCase = (params, caseId, setAlert) => (
 ) => {
   axios.defaults.headers.common['token'] = getState().main.token
   axios
-    .put(API_URL + 'vf_cases/' + caseId, { solution: params })
+    .put(API_URL + 'vf_cases/' + caseId, { vf_case: params })
     .then(r => {
       setAlert({
         title: 'Case is updated successfully!',
@@ -136,7 +143,7 @@ export const updateCase = (params, caseId, setAlert) => (
     })
     .catch(e => {
       setAlert({
-        title: 'Case cannot be updated.',
+        title: 'Case can not be updated.',
         description: e.response.data.message[0]
       })
     })

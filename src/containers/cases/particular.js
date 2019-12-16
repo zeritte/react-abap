@@ -21,7 +21,8 @@ import { connect } from 'react-redux'
 import {
   fetchParticularcase,
   addSolution,
-  updateSolution
+  updateSolution,
+  updateCase
 } from '../../modules/actions'
 require('brace/theme/monokai')
 require('brace/mode/abap')
@@ -81,7 +82,7 @@ const ParticularCase = props => {
                   <Button
                     onClick={() => setSolutionToBeEdited(solution)}
                     color="secondary"
-                    style={{ position: 'absolute', right: '50px' }}>
+                    style={{ position: 'absolute', right: '60px' }}>
                     Edit
                   </Button>
                 ) : null}
@@ -95,6 +96,7 @@ const ParticularCase = props => {
                   <div id={`editor${solution.id}`} className="acediff" />
                 </div>
                 <div
+                  style={{ paddingTop: 20 }}
                   dangerouslySetInnerHTML={{
                     __html: solution.footnote_en
                   }}
@@ -145,12 +147,7 @@ const ParticularCase = props => {
         <EditCaseModal
           show={showEditCase}
           saveFunction={params => {
-            // props.updateSolution(
-            //   { ...params, vf_case_id: case_id },
-            //   solutionToBeEdited.id,
-            //   setAlert
-            // )
-            console.log(params)
+            props.updateCase({ ...params }, case_id, setAlert)
             setShowEditCase(false)
           }}
           handleClose={() => setShowEditCase(false)}
@@ -262,5 +259,5 @@ const mapStateToProps = ({ main }) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchParticularcase, addSolution, updateSolution }
+  { fetchParticularcase, addSolution, updateSolution, updateCase }
 )(ParticularCase)
