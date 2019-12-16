@@ -14,6 +14,7 @@ export const FETCH_ALL_CASES_FAIL = 'fetch_all_cases_fail'
 export const FETCH_PARTICULAR_CASE = 'fetch_particular_case'
 export const FETCH_PARTICULAR_CASE_SUCCESS = 'fetch_particular_case_success'
 export const FETCH_PARTICULAR_CASE_FAIL = 'fetch_particular_case_fail'
+export const FETCH_DOMAINS_TYPES_IMPACTS = 'fetch_domain_types_impacts'
 
 export const signIn = (email, password) => dispatch => {
   dispatch({ type: SIGN_IN })
@@ -147,4 +148,16 @@ export const updateCase = (params, caseId, setAlert) => (
         description: e.response.data.message[0]
       })
     })
+}
+
+export const fetchRelatedData = () => async dispatch => {
+  const domains = await axios.get(API_URL + 'domains')
+  const types = await axios.get(API_URL + 'tctypes')
+  const impacts = await axios.get(API_URL + 'impacts')
+  dispatch({
+    type: FETCH_DOMAINS_TYPES_IMPACTS,
+    domains: domains.data,
+    types: types.data,
+    impacts: impacts.data
+  })
 }

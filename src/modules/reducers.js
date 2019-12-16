@@ -11,7 +11,8 @@ import {
   FETCH_ALL_CASES_FAIL,
   FETCH_PARTICULAR_CASE,
   FETCH_PARTICULAR_CASE_SUCCESS,
-  FETCH_PARTICULAR_CASE_FAIL
+  FETCH_PARTICULAR_CASE_FAIL,
+  FETCH_DOMAINS_TYPES_IMPACTS
 } from './actions'
 
 const initialState = {
@@ -29,7 +30,10 @@ const initialState = {
   allCasesError: null,
   particularCase: null,
   particularCaseLoading: false,
-  particularCaseError: null
+  particularCaseError: null,
+  domains: [],
+  types: [],
+  impacts: []
 }
 
 export default (state = initialState, action) => {
@@ -132,6 +136,14 @@ export default (state = initialState, action) => {
         particularCaseError:
           'Could not fetch the data. Please contact to system admin.',
         particularCaseLoading: false
+      }
+    case FETCH_DOMAINS_TYPES_IMPACTS:
+      console.log(action)
+      return {
+        ...state,
+        domains: action.domains,
+        types: action.types,
+        impacts: action.impacts
       }
     default:
       return state

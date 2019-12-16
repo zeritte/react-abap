@@ -12,12 +12,14 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 import { connect } from 'react-redux'
-import { fetchAllCases, addCase } from '../../modules/actions'
+import { fetchAllCases, fetchRelatedData, addCase } from '../../modules/actions'
 
 const AllCases = props => {
   useEffect(() => {
     props.fetchAllCases()
+    props.fetchRelatedData()
   }, [])
+
   const [showAddCaseModal, setShowAddCaseModal] = useState(false)
   const [alert, setAlert] = useState(null)
   const alertUser = () => {
@@ -96,5 +98,5 @@ const mapStateToProps = ({ main }) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchAllCases, addCase }
+  { fetchAllCases, fetchRelatedData, addCase }
 )(AllCases)
