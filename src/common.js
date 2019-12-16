@@ -203,7 +203,12 @@ export const AddSolutionModal = ({
   useEffect(() => {
     if (!show) setCode(['wrong code here', 'fixed version here'])
   }, [show])
-  const handleSave = () => saveFunction({ code, footnote })
+  const handleSave = () =>
+    saveFunction({
+      before_en: code[0],
+      after_en: code[1],
+      footnote_en: footnote
+    })
   return (
     <Modal aria-labelledby="title" aria-describedby="description" open={show}>
       <div
@@ -264,7 +269,12 @@ export const EditSolutionModal = ({
   const classes = useStyles()
   const [code, setCode] = useState(['', ''])
   const [footnote, setFootnote] = useState('')
-  const handleSave = () => saveFunction({ code, footnote })
+  const handleSave = () =>
+    saveFunction({
+      before_en: code[0],
+      after_en: code[1],
+      footnote_en: footnote
+    })
   return (
     <Modal aria-labelledby="title" aria-describedby="description" open={true}>
       <div

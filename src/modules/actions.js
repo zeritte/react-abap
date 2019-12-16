@@ -14,6 +14,12 @@ export const FETCH_ALL_CASES_FAIL = 'fetch_all_cases_fail'
 export const FETCH_PARTICULAR_CASE = 'fetch_particular_case'
 export const FETCH_PARTICULAR_CASE_SUCCESS = 'fetch_particular_case_success'
 export const FETCH_PARTICULAR_CASE_FAIL = 'fetch_particular_case_fail'
+export const ADD_SOLUTION = 'add_solution'
+export const ADD_SOLUTION_SUCCESS = 'add_solution_success'
+export const ADD_SOLUTION_FAIL = 'add_solution_fail'
+export const UPDATE_SOLUTION = 'update_solution'
+export const UPDATE_SOLUTION_SUCCESS = 'update_solution_success'
+export const UPDATE_SOLUTION_FAIL = 'update_solution_fail'
 
 export const signIn = (email, password) => dispatch => {
   dispatch({ type: SIGN_IN })
@@ -67,10 +73,46 @@ export const fetchParticularcase = id => dispatch => {
     })
 }
 
-export const addSolution = params => dispatch => {
-  console.log(params)
+export const addSolution = (params, setAlert) => (dispatch, getState) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  dispatch({ type: ADD_SOLUTION })
+  axios
+    .post(API_URL + 'solutions', { solution: params })
+    .then(r => {
+      setAlert({
+        title: 'Solution is added successfully!',
+        description: r.data.message
+      })
+      dispatch({ type: ADD_SOLUTION_SUCCESS, payload: r.data })
+      dispatch(fetchParticularcase(params['vf_case_id']))
+    })
+    .catch(e => {
+      setAlert({
+        title: 'Solution cannot be added.',
+        description: e.response.data.message[0]
+      })
+      dispatch({ type: ADD_SOLUTION_FAIL, payload: e.response.data })
+    })
 }
 
-export const saveSolution = params => dispatch => {
-  console.log(params)
+export const updateSolution = (params, solutionId, setAlert) => (dispatch, getState) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  dispatch({ type: UPDATE_SOLUTION })
+  axios
+    .put(API_URL + 'solutions/' + solutionId, { solution: params })
+    .then(r => {
+      setAlert({
+        title: 'Solution is updated successfully!',
+        description: r.data.message
+      })
+      dispatch({ type: UPDATE_SOLUTION_SUCCESS, payload: r.data })
+      dispatch(fetchParticularcase(params['vf_case_id']))
+    })
+    .catch(e => {
+      setAlert({
+        title: 'Solution cannot be updated.',
+        description: e.response.data.message[0]
+      })
+      dispatch({ type: UPDATE_SOLUTION_FAIL, payload: e.response.data })
+    })
 }
