@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
+import TextField from '@material-ui/core/TextField'
 import CardContent from '@material-ui/core/CardContent'
 import Modal from '@material-ui/core/Modal'
 import { makeStyles } from '@material-ui/core/styles'
@@ -219,7 +220,7 @@ export const AddSolutionModal = ({
         }}
         className={classes.paper}>
         <h2 id="title">Add new solution for case '{caseName}'</h2>
-        <p id="description">Before & After</p>
+        <h3 id="description">Before & After</h3>
         <DiffEditor
           value={code}
           onChange={e => setCode(e)}
@@ -229,7 +230,7 @@ export const AddSolutionModal = ({
           name="diff-editor"
           theme="github"
         />
-        <p id="footnote">Footnote</p>
+        <h3 id="footnote">Footnote</h3>
         <CKEditor
           editor={ClassicEditor}
           onChange={(event, editor) => setFootnote(editor.getData())}
@@ -285,7 +286,7 @@ export const EditSolutionModal = ({
         }}
         className={classes.paper}>
         <h2 id="title">Edit the solution for case '{caseName}'</h2>
-        <p id="description">Before & After</p>
+        <h3 id="description">Before & After</h3>
         <DiffEditor
           value={code}
           onChange={e => setCode(e)}
@@ -295,11 +296,71 @@ export const EditSolutionModal = ({
           name="diff-editor"
           theme="github"
         />
-        <p id="footnote">Footnote</p>
+        <h3 id="footnote">Footnote</h3>
         <CKEditor
           onInit={editor => editor.setData(_footnote)}
           editor={ClassicEditor}
           onChange={(event, editor) => setFootnote(editor.getData())}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 20,
+            justifyContent: 'space-between'
+          }}>
+          <Button color="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button color="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
+
+export const EditCaseModal = ({
+  show,
+  handleClose,
+  _title,
+  _desc,
+  saveFunction
+}) => {
+  useEffect(() => {
+    setTitle(_title)
+    setDescription(_desc)
+  }, [show])
+  const classes = useStyles()
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const handleSave = () =>
+    saveFunction({ name: title, content_en: description })
+  return (
+    <Modal aria-labelledby="title" aria-describedby="description" open={true}>
+      <div
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+        className={classes.paper}>
+        <h2 id="title">Edit case</h2>
+        <h3 id="title-edit">Title</h3>
+        <TextField
+          required
+          fullWidth
+          id="standard-required"
+          label="Required"
+          defaultValue={title}
+          onChange={e => setTitle(e.target.value)}
+        />
+        <h3 id="desc">Description</h3>
+        <CKEditor
+          onInit={editor => editor.setData(_desc)}
+          editor={ClassicEditor}
+          onChange={(event, editor) => setDescription(editor.getData())}
         />
         <div
           style={{

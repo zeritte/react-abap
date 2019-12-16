@@ -3,7 +3,12 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
-import { Header, AddSolutionModal, EditSolutionModal } from '../../common'
+import {
+  Header,
+  AddSolutionModal,
+  EditSolutionModal,
+  EditCaseModal
+} from '../../common'
 import AceDiff from 'ace-diff'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel'
@@ -25,6 +30,7 @@ const ParticularCase = props => {
   const [showAddSolutionModal, setShowAddSolutionModal] = useState(false)
   const [solutionToBeEdited, setSolutionToBeEdited] = useState(null)
   const [alert, setAlert] = useState(null)
+  const [showEditCase, setShowEditCase] = useState(false)
   const { case_id } = props.match.params
   useEffect(() => {
     props.fetchParticularcase(case_id)
@@ -133,6 +139,28 @@ const ParticularCase = props => {
     }
   }
 
+  const editCaseModal = () => {
+    if (showEditCase) {
+      return (
+        <EditCaseModal
+          show={showEditCase}
+          saveFunction={params => {
+            // props.updateSolution(
+            //   { ...params, vf_case_id: case_id },
+            //   solutionToBeEdited.id,
+            //   setAlert
+            // )
+            console.log(params)
+            setShowEditCase(false)
+          }}
+          handleClose={() => setShowEditCase(false)}
+          _title={props.particularCase.name}
+          _desc={props.particularCase.content_en}
+        />
+      )
+    }
+  }
+
   const addModal = () => (
     <AddSolutionModal
       show={showAddSolutionModal}
@@ -184,9 +212,20 @@ const ParticularCase = props => {
                     justifyContent: 'space-between'
                   }}>
                   <h1>{props.particularCase.name}</h1>
-                  <Button onClick={clickOnAdd}>
-                    <h3>Add solution</h3>
-                  </Button>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row'
+                    }}>
+                    {props.role !== 'member' && props.isLoggedIn ? (
+                      <Button onClick={() => setShowEditCase(true)}>
+                        <h3>Edit case</h3>
+                      </Button>
+                    ) : null}
+                    <Button onClick={clickOnAdd}>
+                      <h3>Add solution</h3>
+                    </Button>
+                  </div>
                 </div>
                 <div
                   dangerouslySetInnerHTML={{
@@ -198,6 +237,7 @@ const ParticularCase = props => {
               {addModal()}
               {editModal()}
               {alertUser()}
+              {editCaseModal()}
             </div>
           ) : (
             <center>
@@ -214,6 +254,7 @@ const mapStateToProps = ({ main }) => ({
   name: main.name,
   isLoggedIn: main.isLoggedIn,
   userId: main.userId,
+  role: main.role,
   particularCase: main.particularCase,
   particularCaseLoading: main.particularCaseLoading,
   particularCaseError: main.particularCaseError
