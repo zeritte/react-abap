@@ -153,11 +153,10 @@ const ParticularCase = props => {
             setShowEditCase(false)
           }}
           handleClose={() => setShowEditCase(false)}
-          _title={props.particularCase.name}
-          _desc={props.particularCase.content_en}
           impacts={props.impacts}
           types={props.types}
           domains={props.domains}
+          vf_case={props.particularCase}
         />
       )
     }
