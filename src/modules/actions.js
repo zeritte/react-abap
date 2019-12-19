@@ -1,4 +1,5 @@
 import axios from 'axios'
+import API_URL from "../api_url"
 
 export const SIGN_IN = 'sign_in'
 export const SIGN_IN_SUCCESS = 'sign_in_success'
@@ -7,7 +8,6 @@ export const SIGN_UP = 'sign_up'
 export const SIGN_UP_SUCCESS = 'sign_up_success'
 export const SIGN_UP_FAIL = 'sign_up_fail'
 export const LOGOUT = 'logout'
-export const API_URL = 'http://localhost:3000/api/'
 export const FETCH_ALL_CASES = 'fetch_all_cases'
 export const FETCH_ALL_CASES_SUCCESS = 'fetch_all_cases_success'
 export const FETCH_ALL_CASES_FAIL = 'fetch_all_cases_fail'
