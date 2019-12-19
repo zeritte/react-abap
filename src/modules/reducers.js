@@ -12,7 +12,10 @@ import {
   FETCH_PARTICULAR_CASE,
   FETCH_PARTICULAR_CASE_SUCCESS,
   FETCH_PARTICULAR_CASE_FAIL,
-  FETCH_DOMAINS_TYPES_IMPACTS
+  FETCH_DOMAINS_TYPES_IMPACTS,
+  FETCH_SOLUTIONS_IN_REVIEW,
+  FETCH_SOLUTIONS_IN_REVIEW_FAIL,
+  FETCH_SOLUTIONS_IN_REVIEW_SUCCESS
 } from './actions'
 
 const initialState = {
@@ -33,7 +36,10 @@ const initialState = {
   particularCaseError: null,
   domains: [],
   types: [],
-  impacts: []
+  impacts: [],
+  solutionsInReview: null,
+  solutionsInReviewLoading: false,
+  solutionsInReviewError: null
 }
 
 export default (state = initialState, action) => {
@@ -138,12 +144,28 @@ export default (state = initialState, action) => {
         particularCaseLoading: false
       }
     case FETCH_DOMAINS_TYPES_IMPACTS:
-      console.log(action)
       return {
         ...state,
         domains: action.domains,
         types: action.types,
         impacts: action.impacts
+      }
+    case FETCH_SOLUTIONS_IN_REVIEW:
+      return {
+        ...state,
+        solutionsInReviewLoading: true
+      }
+    case FETCH_SOLUTIONS_IN_REVIEW_SUCCESS:
+      return {
+        ...state,
+        solutionsInReview: action.payload,
+        solutionsInReviewLoading: false
+      }
+    case FETCH_SOLUTIONS_IN_REVIEW_FAIL:
+      return {
+        ...state,
+        solutionsInReviewError: action.payload,
+        solutionsInReviewLoading: false
       }
     default:
       return state

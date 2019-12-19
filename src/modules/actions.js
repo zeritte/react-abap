@@ -15,6 +15,10 @@ export const FETCH_PARTICULAR_CASE = 'fetch_particular_case'
 export const FETCH_PARTICULAR_CASE_SUCCESS = 'fetch_particular_case_success'
 export const FETCH_PARTICULAR_CASE_FAIL = 'fetch_particular_case_fail'
 export const FETCH_DOMAINS_TYPES_IMPACTS = 'fetch_domain_types_impacts'
+export const FETCH_SOLUTIONS_IN_REVIEW = 'fetch_solutions_in_review'
+export const FETCH_SOLUTIONS_IN_REVIEW_SUCCESS =
+  'fetch_solutions_in_review_success'
+export const FETCH_SOLUTIONS_IN_REVIEW_FAIL = 'fetch_solutions_in_review_fail'
 
 export const signIn = (email, password) => dispatch => {
   dispatch({ type: SIGN_IN })
@@ -160,4 +164,39 @@ export const fetchRelatedData = () => async dispatch => {
     types: types.data,
     impacts: impacts.data
   })
+}
+
+export const fetchSolutionsInReview = () => async (dispatch, getState) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  dispatch({ type: FETCH_SOLUTIONS_IN_REVIEW })
+  axios
+    .get(API_URL + 'waiting_list')
+    .then(r => {
+      dispatch({ type: FETCH_SOLUTIONS_IN_REVIEW_SUCCESS, payload: r.data })
+    })
+    .catch(e => {
+      dispatch({
+        type: FETCH_SOLUTIONS_IN_REVIEW_FAIL,
+        payload: e.response.data
+      })
+    })
+}
+
+export const approveSolution = (id, setAlert) => async (dispatch, getState) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  axios
+    .get(API_URL + 'approve_solution/' + id)
+    .then(r => {
+      setAlert({
+        title: 'Success!',
+        description: r.data.message
+      })
+      dispatch(fetchSolutionsInReview())
+    })
+    .catch(e => {
+      setAlert({
+        title: 'Solution could not be approved.',
+        description: e.response.data.message
+      })
+    })
 }

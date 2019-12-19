@@ -431,3 +431,96 @@ export const EditCaseModal = ({
     </Modal>
   )
 }
+
+export const SolutionCard = ({ solution, clickFunction }) => {
+  const classes = useStyles()
+  return (
+    <Grid item key={solution.id} xs={12} md={6}>
+      <CardActionArea component="a" onClick={clickFunction}>
+        <Card className={classes.card}>
+          <div className={classes.cardDetails}>
+            <CardContent>
+              <Typography component="h2" variant="h5">
+                <b>Case:</b> {solution.vf_case_name}
+              </Typography>
+              <Grid
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-around'
+                }}>
+                <Typography
+                  style={{ flex: 1 }}
+                  variant="h6"
+                  color="textSecondary">
+                  {solution.created_at}
+                </Typography>
+                <Typography
+                  style={{ flex: 1 }}
+                  variant="h6"
+                  color="textSecondary">
+                  <b>by:</b> {solution.created_by}
+                </Typography>
+              </Grid>
+            </CardContent>
+          </div>
+        </Card>
+      </CardActionArea>
+    </Grid>
+  )
+}
+
+export const ApproveSolutionModal = ({
+  handleClose,
+  show,
+  caseName,
+  approveFunction,
+  footnote,
+  before,
+  after
+}) => {
+  const classes = useStyles()
+  const handleApprove = () => approveFunction()
+  return (
+    <Modal aria-labelledby="title" aria-describedby="description" open={show}>
+      <div
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+        className={classes.paper}>
+        <h2 id="title">Approval of the solution for case '{caseName}'</h2>
+        <h3 id="description">Before & After</h3>
+        <DiffEditor
+          value={[before, after]}
+          height="300px"
+          width="100%"
+          mode="abap"
+          name="diff-editor"
+          theme="github"
+        />
+        <h3 id="footnote">Footnote</h3>
+        <CKEditor
+          onInit={editor => editor.setData(footnote)}
+          editor={ClassicEditor}
+          disabled
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 20,
+            justifyContent: 'space-between'
+          }}>
+          <Button color="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button color="primary" onClick={handleApprove}>
+            Approve
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
