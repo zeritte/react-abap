@@ -10,6 +10,12 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 import TextField from '@material-ui/core/TextField'
 import CardContent from '@material-ui/core/CardContent'
 import Modal from '@material-ui/core/Modal'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Switch from '@material-ui/core/Switch'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 import { makeStyles } from '@material-ui/core/styles'
 import { logout } from './modules/actions'
 import { store } from './store'
@@ -50,6 +56,9 @@ const useStyles = makeStyles(theme => ({
     display: 'block',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3)
+  },
+  formControl: {
+    minWidth: 120
   }
 }))
 const sectionsNotAdmin = [
@@ -321,7 +330,14 @@ export const EditSolutionModal = ({
   )
 }
 
-export const AddCaseModal = ({ show, handleClose, saveFunction }) => {
+export const AddCaseModal = ({
+  show,
+  handleClose,
+  saveFunction,
+  domains,
+  impacts,
+  types
+}) => {
   const classes = useStyles()
   useEffect(() => {
     if (!show) {
@@ -331,8 +347,25 @@ export const AddCaseModal = ({ show, handleClose, saveFunction }) => {
   }, [show])
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [domain, setDomain] = useState('')
+  const [impact, setImpact] = useState('')
+  const [type, setType] = useState('')
+  const [caseId, setCaseId] = useState('')
+  const [isActive, setIsActive] = useState(true)
+  const [caseClass, setCaseClass] = useState('')
+  const [documentation, setDocumentation] = useState('')
   const handleSave = () =>
-    saveFunction({ name: title, content_en: description })
+    saveFunction({
+      name: title,
+      content_en: description,
+      domain_id: domain,
+      tctype_id: type,
+      impact_id: impact,
+      case_id: caseId,
+      is_active: isActive,
+      case_class: caseClass,
+      documentation: documentation
+    })
   return (
     <Modal aria-labelledby="title" aria-describedby="description" open={show}>
       <div
@@ -346,10 +379,96 @@ export const AddCaseModal = ({ show, handleClose, saveFunction }) => {
         <h3 id="title-edit">Title</h3>
         <TextField
           fullWidth
+          label="Title"
           id="standard-required"
           defaultValue={title}
           onChange={e => setTitle(e.target.value)}
         />
+        <div
+          style={{
+            marginTop: '10px',
+            marginBottom: '10px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around'
+          }}>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">Domain</InputLabel>
+            <Select
+              id="domain"
+              value={domain}
+              onChange={e => setDomain(e.target.value)}>
+              {domains.map(d => (
+                <MenuItem key={d.id} value={d.id}>
+                  {d.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">Type</InputLabel>
+            <Select
+              id="type"
+              value={type}
+              onChange={e => setType(e.target.value)}>
+              {types.map(d => (
+                <MenuItem key={d.id} value={d.id}>
+                  {d.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label">Impact</InputLabel>
+            <Select
+              id="impact"
+              value={impact}
+              onChange={e => setImpact(e.target.value)}>
+              {impacts.map(d => (
+                <MenuItem key={d.id} value={d.id}>
+                  {d.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <div
+          style={{
+            marginTop: '10px',
+            marginBottom: '10px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around'
+          }}>
+          <TextField
+            label="Case ID"
+            id="standard-required"
+            defaultValue={caseId}
+            onChange={e => setCaseId(e.target.value)}
+          />
+          <TextField
+            label="Documentation"
+            id="standard-required"
+            defaultValue={documentation}
+            onChange={e => setDocumentation(e.target.value)}
+          />
+          <TextField
+            label="Case Class"
+            id="standard-required"
+            defaultValue={caseClass}
+            onChange={e => setCaseClass(e.target.value)}
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isActive}
+                onChange={e => setIsActive(e.target.checked)}
+                value="isActive"
+              />
+            }
+            label="Is active"
+          />
+        </div>
         <h3 id="desc">Description</h3>
         <CKEditor
           editor={ClassicEditor}

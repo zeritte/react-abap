@@ -19,7 +19,6 @@ const AllCases = props => {
     props.fetchAllCases()
     props.fetchRelatedData()
   }, [])
-
   const [showAddCaseModal, setShowAddCaseModal] = useState(false)
   const [alert, setAlert] = useState(null)
   const alertUser = () => {
@@ -47,6 +46,9 @@ const AllCases = props => {
         setShowAddCaseModal(false)
       }}
       handleClose={() => setShowAddCaseModal(false)}
+      impacts={props.impacts}
+      types={props.types}
+      domains={props.domains}
     />
   )
   return (
@@ -93,7 +95,10 @@ const mapStateToProps = ({ main }) => ({
   isLoggedIn: main.isLoggedIn,
   allCases: main.allCases,
   allCasesLoading: main.allCasesLoading,
-  allCasesError: main.allCasesError
+  allCasesError: main.allCasesError,
+  domains: main.domains,
+  types: main.types,
+  impacts: main.impacts
 })
 
 export default connect(

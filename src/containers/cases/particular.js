@@ -22,7 +22,8 @@ import {
   fetchParticularcase,
   addSolution,
   updateSolution,
-  updateCase
+  updateCase,
+  fetchRelatedData
 } from '../../modules/actions'
 require('brace/theme/monokai')
 require('brace/mode/abap')
@@ -35,6 +36,7 @@ const ParticularCase = props => {
   const { case_id } = props.match.params
   useEffect(() => {
     props.fetchParticularcase(case_id)
+    props.fetchRelatedData()
   }, [])
   useEffect(() => {
     if (props.particularCase && props.particularCase.solutions)
@@ -153,6 +155,9 @@ const ParticularCase = props => {
           handleClose={() => setShowEditCase(false)}
           _title={props.particularCase.name}
           _desc={props.particularCase.content_en}
+          impacts={props.impacts}
+          types={props.types}
+          domains={props.domains}
         />
       )
     }
@@ -254,10 +259,19 @@ const mapStateToProps = ({ main }) => ({
   role: main.role,
   particularCase: main.particularCase,
   particularCaseLoading: main.particularCaseLoading,
-  particularCaseError: main.particularCaseError
+  particularCaseError: main.particularCaseError,
+  domains: main.domains,
+  types: main.types,
+  impacts: main.impacts
 })
 
 export default connect(
   mapStateToProps,
-  { fetchParticularcase, addSolution, updateSolution, updateCase }
+  {
+    fetchParticularcase,
+    addSolution,
+    updateSolution,
+    updateCase,
+    fetchRelatedData
+  }
 )(ParticularCase)
