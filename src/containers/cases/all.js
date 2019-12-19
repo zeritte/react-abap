@@ -70,9 +70,15 @@ const AllCases = props => {
             </div>
             {props.allCases ? (
               <Grid container spacing={4}>
-                {props.allCases.map(vfcase => (
-                  <CaseCard key={vfcase.id} vfcase={vfcase} />
-                ))}
+                {props.allCases
+                  .filter(vfcase =>
+                    props.role === 'member' || !props.isLoggedIn
+                      ? vfcase.is_active
+                      : vfcase
+                  )
+                  .map(vfcase => (
+                    <CaseCard key={vfcase.id} vfcase={vfcase} />
+                  ))}
               </Grid>
             ) : props.allCasesLoading ? (
               <CircularProgress />

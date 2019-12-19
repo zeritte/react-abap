@@ -70,11 +70,21 @@ const Home = props => {
   const [search, setSearch] = useState('')
   const filterCases = () => {
     if (search.length > 0)
-      return props.allCases.filter(
-        vfcase =>
-          vfcase.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-          vfcase.case_id.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-      )
+      return props.allCases
+        .filter(
+          vfcase =>
+            vfcase.name
+              .toLocaleLowerCase()
+              .includes(search.toLocaleLowerCase()) ||
+            vfcase.case_id
+              .toLocaleLowerCase()
+              .includes(search.toLocaleLowerCase())
+        )
+        .filter(vfcase =>
+          props.role === 'member' || !props.isLoggedIn
+            ? vfcase.is_active
+            : vfcase
+        )
     return []
   }
   useEffect(() => {

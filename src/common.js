@@ -161,7 +161,9 @@ export const CaseCard = ({ vfcase }) => {
   return (
     <Grid item key={vfcase.id} xs={12} md={6}>
       <CardActionArea component="a" href={'/cases/' + vfcase.id}>
-        <Card className={classes.card}>
+        <Card
+          className={classes.card}
+          style={{ opacity: vfcase.is_active ? 1 : 0.3 }}>
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
@@ -509,7 +511,7 @@ export const EditCaseModal = ({
   const [impact, setImpact] = useState(vf_case.impact_id || '')
   const [type, setType] = useState(vf_case.tctype_id || '')
   const [caseId, setCaseId] = useState(vf_case.case_id || '')
-  const [isActive, setIsActive] = useState(vf_case.is_active || true)
+  const [isActive, setIsActive] = useState(vf_case.is_active)
   const [caseClass, setCaseClass] = useState(vf_case.case_class || '')
   const [documentation, setDocumentation] = useState(
     vf_case.documentation || ''
