@@ -12,6 +12,7 @@ import {
 import AceDiff from 'ace-diff'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel'
+import Typography from '@material-ui/core/Typography'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
@@ -162,17 +163,19 @@ const ParticularCase = props => {
     }
   }
 
-  const addModal = () => (
-    <AddSolutionModal
-      show={showAddSolutionModal}
-      caseName={props.particularCase.name}
-      saveFunction={params => {
-        props.addSolution({ ...params, vf_case_id: case_id }, setAlert)
-        setShowAddSolutionModal(false)
-      }}
-      handleClose={() => setShowAddSolutionModal(false)}
-    />
-  )
+  const addModal = () => {
+    return (
+      <AddSolutionModal
+        show={showAddSolutionModal}
+        caseName={props.particularCase.name}
+        saveFunction={params => {
+          props.addSolution({ ...params, vf_case_id: case_id }, setAlert)
+          setShowAddSolutionModal(false)
+        }}
+        handleClose={() => setShowAddSolutionModal(false)}
+      />
+    )
+  }
 
   const clickOnAdd = () => {
     if (props.isLoggedIn) setShowAddSolutionModal(true)
@@ -204,46 +207,61 @@ const ParticularCase = props => {
         <main>
           <Header />
           {props.particularCase ? (
-            <div style={{ width: '100%' }}>
-              <div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between'
-                  }}>
-                  <h1>{props.particularCase.name}</h1>
+            !props.particularCase.is_active ? (
+              <Typography
+                style={{ paddingTop: 20 }}
+                variant="h5"
+                color="error"
+                align="center"
+                paragraph>
+                This case is not active.
+              </Typography>
+            ) : (
+              <div style={{ width: '100%' }}>
+                <div>
                   <div
                     style={{
                       display: 'flex',
-                      flexDirection: 'row'
+                      flexDirection: 'row',
+                      justifyContent: 'space-between'
                     }}>
-                    {props.role !== 'member' && props.isLoggedIn ? (
-                      <Button onClick={() => setShowEditCase(true)}>
-                        <h3>Edit case</h3>
+                    <h1>{props.particularCase.name}</h1>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row'
+                      }}>
+                      {props.role !== 'member' && props.isLoggedIn ? (
+                        <Button onClick={() => setShowEditCase(true)}>
+                          <h3>Edit case</h3>
+                        </Button>
+                      ) : null}
+                      <Button onClick={clickOnAdd}>
+                        <h3>Add solution</h3>
                       </Button>
-                    ) : null}
-                    <Button onClick={clickOnAdd}>
-                      <h3>Add solution</h3>
-                    </Button>
+                    </div>
                   </div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: props.particularCase.content_en
+                    }}
+                  />
+                  <div style={{ paddingBottom: 50 }}>{renderSolutions()}</div>
                 </div>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: props.particularCase.content_en
-                  }}
-                />
-                <div style={{ paddingBottom: 50 }}>{renderSolutions()}</div>
+                {addModal()}
+                {editModal()}
+                {alertUser()}
+                {editCaseModal()}
               </div>
-              {addModal()}
-              {editModal()}
-              {alertUser()}
-              {editCaseModal()}
-            </div>
-          ) : (
+            )
+          ) : props.particularCaseLoading ? (
             <center>
               <CircularProgress />
             </center>
+          ) : (
+            <Typography variant="subtitle1" color="error" align="center" paragraph>
+              {props.particularCaseError}
+            </Typography>
           )}
         </main>
       </Container>

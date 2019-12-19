@@ -65,15 +65,21 @@ const SolutionsInReview = props => {
           <center>
             <h1 style={{ flex: 1 }}>Solutions waiting for a review</h1>
             {props.solutionsInReview ? (
-              <Grid container spacing={4}>
-                {props.solutionsInReview.map(solution => (
-                  <SolutionCard
-                    key={solution.id}
-                    solution={solution}
-                    clickFunction={() => setSolutionToBeApproved(solution)}
-                  />
-                ))}
-              </Grid>
+              props.solutionsInReview.length > 0 ? (
+                <Grid container spacing={4}>
+                  {props.solutionsInReview.map(solution => (
+                    <SolutionCard
+                      key={solution.id}
+                      solution={solution}
+                      clickFunction={() => setSolutionToBeApproved(solution)}
+                    />
+                  ))}
+                </Grid>
+              ) : (
+                <Typography variant="subtitle1" paragraph>
+                  There is no solution to review.
+                </Typography>
+              )
             ) : props.solutionsInReviewLoading ? (
               <CircularProgress />
             ) : (

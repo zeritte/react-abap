@@ -28,7 +28,10 @@ export const signIn = (email, password) => dispatch => {
       dispatch({ type: SIGN_IN_SUCCESS, payload: r.data })
     })
     .catch(e => {
-      dispatch({ type: SIGN_IN_FAIL, payload: e.response.data })
+      dispatch({
+        type: SIGN_IN_FAIL,
+        payload: e.response ? e.response.data : { message: 'Auth server error' }
+      })
     })
 }
 
@@ -40,7 +43,12 @@ export const signUp = (name, email, password) => dispatch => {
       dispatch({ type: SIGN_UP_SUCCESS, payload: r.data })
     })
     .catch(e => {
-      dispatch({ type: SIGN_UP_FAIL, payload: e.response.data })
+      dispatch({
+        type: SIGN_UP_FAIL,
+        payload: e.response
+          ? e.response.data
+          : { message: ['Auth server error'] }
+      })
     })
 }
 
@@ -56,7 +64,10 @@ export const fetchAllCases = () => dispatch => {
       dispatch({ type: FETCH_ALL_CASES_SUCCESS, payload: r.data })
     })
     .catch(e => {
-      dispatch({ type: FETCH_ALL_CASES_FAIL, payload: e.response.data })
+      dispatch({
+        type: FETCH_ALL_CASES_FAIL,
+        payload: e.response ? e.response.data : null
+      })
     })
 }
 
@@ -68,7 +79,10 @@ export const fetchParticularcase = id => dispatch => {
       dispatch({ type: FETCH_PARTICULAR_CASE_SUCCESS, payload: r.data })
     })
     .catch(e => {
-      dispatch({ type: FETCH_PARTICULAR_CASE_FAIL, payload: e.response.data })
+      dispatch({
+        type: FETCH_PARTICULAR_CASE_FAIL,
+        payload: e.response ? e.response.data : null
+      })
     })
 }
 
@@ -86,7 +100,7 @@ export const addSolution = (params, setAlert) => (dispatch, getState) => {
     .catch(e => {
       setAlert({
         title: 'Solution can not be added.',
-        description: e.response.data.message[0]
+        description: e.response && e.response.data && e.response.data.message
       })
     })
 }
@@ -108,7 +122,7 @@ export const updateSolution = (params, solutionId, setAlert) => (
     .catch(e => {
       setAlert({
         title: 'Solution can not be updated.',
-        description: e.response.data.message
+        description: e.response && e.response.data && e.response.data.message
       })
     })
 }
@@ -127,7 +141,7 @@ export const addCase = (params, setAlert) => (dispatch, getState) => {
     .catch(e => {
       setAlert({
         title: 'Case can not be created.',
-        description: e.response.data.message
+        description: e.response && e.response.data && e.response.data.message
       })
     })
 }
@@ -149,7 +163,7 @@ export const updateCase = (params, caseId, setAlert) => (
     .catch(e => {
       setAlert({
         title: 'Case can not be updated.',
-        description: e.response.data.message[0]
+        description: e.response && e.response.data && e.response.data.message
       })
     })
 }
@@ -177,7 +191,10 @@ export const fetchSolutionsInReview = () => async (dispatch, getState) => {
     .catch(e => {
       dispatch({
         type: FETCH_SOLUTIONS_IN_REVIEW_FAIL,
-        payload: e.response.data
+        payload:
+          e.response && e.response.data && e.response.data.message
+            ? e.response.data.message
+            : 'Could not fetch the data. Please contact to system admin.'
       })
     })
 }
@@ -196,7 +213,7 @@ export const approveSolution = (id, setAlert) => async (dispatch, getState) => {
     .catch(e => {
       setAlert({
         title: 'Solution could not be approved.',
-        description: e.response.data.message
+        description: e.response && e.response.data && e.response.data.message
       })
     })
 }
