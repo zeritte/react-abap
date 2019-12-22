@@ -1,3 +1,4 @@
 import SolutionsInReview from './SolutionsInReview'
+import Admin from "./Admin"
 
-export { SolutionsInReview }
+export { SolutionsInReview, Admin }

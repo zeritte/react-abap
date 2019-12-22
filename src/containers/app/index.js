@@ -4,7 +4,7 @@ import Home from '../home'
 import About from '../about'
 import { SignIn, SignUp } from '../session'
 import { AllCases, ParticularCase } from '../cases'
-import { SolutionsInReview } from '../admin'
+import { SolutionsInReview, Admin } from '../admin'
 
 import { connect } from 'react-redux'
 
@@ -17,6 +17,7 @@ const App = () => {
       <Route exact path="/sign-up" component={SignUp} />
       <Route exact path="/cases" component={AllCases} />
       <Route path="/cases/:case_id" component={ParticularCase} />
+      <Route exact path="/admin" component={Admin} />
       <Route exact path="/solutions_in_review" component={SolutionsInReview} />
     </main>
   )
