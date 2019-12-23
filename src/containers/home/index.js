@@ -81,9 +81,7 @@ const Home = props => {
               .includes(search.toLocaleLowerCase())
         )
         .filter(vfcase =>
-          props.role === 'member' || !props.isLoggedIn
-            ? vfcase.is_active
-            : vfcase
+          props.isMember || !props.isLoggedIn ? vfcase.is_active : vfcase
         )
     return []
   }
@@ -144,6 +142,7 @@ const Home = props => {
 const mapStateToProps = ({ main }) => ({
   role: main.role,
   name: main.name,
+  isMember: main.isMember,
   isLoggedIn: main.isLoggedIn,
   allCases: main.allCases,
   allCasesLoading: main.allCasesLoading,

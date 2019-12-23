@@ -76,13 +76,15 @@ const sectionsAdmin = [
 export const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [role, setRole] = useState(null)
+  const [isMember, setIsMember] = useState(false)
   const [sections, setSections] = useState([])
   useEffect(() => {
     setIsLoggedIn(store.getState().main.isLoggedIn)
     setRole(store.getState().main.role)
+    setIsMember(store.getState().main.isMember)
   }, [store.getState()])
   useEffect(() => {
-    if ((role === 'admin') | (role === 'editor')) setSections(sectionsAdmin)
+    if (!isMember && isLoggedIn) setSections(sectionsAdmin)
     else setSections(sectionsNotAdmin)
   }, [role])
   const logOut = () => store.dispatch(logout())

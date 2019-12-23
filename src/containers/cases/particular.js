@@ -231,7 +231,7 @@ const ParticularCase = props => {
                         display: 'flex',
                         flexDirection: 'row'
                       }}>
-                      {props.role !== 'member' && props.isLoggedIn ? (
+                      {!props.isMember && props.isLoggedIn ? (
                         <Button onClick={() => setShowEditCase(true)}>
                           <h3>Edit case</h3>
                         </Button>
@@ -278,6 +278,7 @@ const mapStateToProps = ({ main }) => ({
   isLoggedIn: main.isLoggedIn,
   userId: main.userId,
   role: main.role,
+  isMember: main.isMember,
   particularCase: main.particularCase,
   particularCaseLoading: main.particularCaseLoading,
   particularCaseError: main.particularCaseError,

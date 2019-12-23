@@ -28,6 +28,7 @@ const initialState = {
   token: null,
   role: null,
   name: null,
+  isMember: false,
   allCases: null,
   allCasesLoading: false,
   allCasesError: null,
@@ -58,7 +59,8 @@ export default (state = initialState, action) => {
         userId: action.payload.id,
         token: action.payload.authentication_token,
         role: action.payload.role,
-        name: action.payload.name
+        name: action.payload.name,
+        isMember: action.payload.role === 'member'
       }
     case SIGN_IN_FAIL:
       return {

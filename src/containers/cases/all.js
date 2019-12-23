@@ -63,7 +63,7 @@ const AllCases = props => {
               <h1 style={{ flex: 1 }}>All Cases</h1>
               <Button
                 style={{ flex: 0.2 }}
-                disabled={props.role === 'member' || !props.isLoggedIn}
+                disabled={props.isMember || !props.isLoggedIn}
                 onClick={() => setShowAddCaseModal(true)}>
                 <h3>Add case</h3>
               </Button>
@@ -72,7 +72,7 @@ const AllCases = props => {
               <Grid container spacing={4}>
                 {props.allCases
                   .filter(vfcase =>
-                    props.role === 'member' || !props.isLoggedIn
+                    props.isMember || !props.isLoggedIn
                       ? vfcase.is_active
                       : vfcase
                   )
@@ -97,6 +97,7 @@ const AllCases = props => {
 }
 
 const mapStateToProps = ({ main }) => ({
+  isMember: main.isMember,
   role: main.role,
   isLoggedIn: main.isLoggedIn,
   allCases: main.allCases,
