@@ -310,7 +310,7 @@ export const EditSolutionModal = ({
         />
         <h3 id="footnote">Footnote</h3>
         <CKEditor
-          onInit={editor => editor.setData(_footnote)}
+          onInit={editor => editor.setData(_footnote || '')}
           editor={ClassicEditor}
           onChange={(event, editor) => setFootnote(editor.getData())}
         />
@@ -634,7 +634,7 @@ export const EditCaseModal = ({
         </div>
         <h3 id="desc">Description</h3>
         <CKEditor
-          onInit={editor => editor.setData(vf_case.content_en)}
+          onInit={editor => editor.setData(vf_case.content_en || '')}
           editor={ClassicEditor}
           onChange={(event, editor) => setDescription(editor.getData())}
         />
@@ -727,7 +727,7 @@ export const ApproveSolutionModal = ({
         />
         <h3 id="footnote">Footnote</h3>
         <CKEditor
-          onInit={editor => editor.setData(footnote)}
+          onInit={editor => editor.setData(footnote || '')}
           editor={ClassicEditor}
           disabled
         />
