@@ -123,26 +123,6 @@ const Admin = props => {
         />
       )
   }
-  const users = [
-    {
-      id: 1,
-      name: 'salih',
-      role: 'member',
-      email: 'email@mail.com'
-    },
-    {
-      id: 2,
-      name: 'kasım',
-      role: 'editor',
-      email: 'email@mail.com'
-    },
-    {
-      id: 3,
-      name: 'benli',
-      role: 'admin',
-      email: 'email@mail.com'
-    }
-  ]
   return (
     <React.Fragment>
       <CssBaseline />
