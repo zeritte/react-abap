@@ -1,5 +1,5 @@
 import axios from 'axios'
-import API_URL from "../api_url"
+import API_URL from '../api_url'
 
 export const SIGN_IN = 'sign_in'
 export const SIGN_IN_SUCCESS = 'sign_in_success'
@@ -213,6 +213,75 @@ export const approveSolution = (id, setAlert) => async (dispatch, getState) => {
     .catch(e => {
       setAlert({
         title: 'Solution could not be approved.',
+        description: e.response && e.response.data && e.response.data.message
+      })
+    })
+}
+
+export const createRelatedData = (name, params, setAlert) => async (
+  dispatch,
+  getState
+) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  const section = name === 'types' ? 'tctypes' : name
+  axios
+    .post(API_URL + section, params)
+    .then(r => {
+      setAlert({
+        title: 'Success!',
+        description: r.data.message
+      })
+      dispatch(fetchRelatedData())
+    })
+    .catch(e => {
+      setAlert({
+        title: 'Could not be created!',
+        description: e.response && e.response.data && e.response.data.message
+      })
+    })
+}
+
+export const updateRelatedData = (name, params, id, setAlert) => async (
+  dispatch,
+  getState
+) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  const section = name === 'type' ? 'tctype' : name
+  axios
+    .put(API_URL + section + 's/' + id, params)
+    .then(r => {
+      setAlert({
+        title: 'Success!',
+        description: r.data.message
+      })
+      dispatch(fetchRelatedData())
+    })
+    .catch(e => {
+      setAlert({
+        title: 'Could not be updated!',
+        description: e.response && e.response.data && e.response.data.message
+      })
+    })
+}
+
+export const deleteRelatedData = (name, id, setAlert) => async (
+  dispatch,
+  getState
+) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  const section = name === 'type' ? 'tctype' : name
+  axios
+    .delete(API_URL + section + 's/' + id)
+    .then(r => {
+      setAlert({
+        title: 'Success!',
+        description: r.data.message
+      })
+      dispatch(fetchRelatedData())
+    })
+    .catch(e => {
+      setAlert({
+        title: 'Could not be deleted!',
         description: e.response && e.response.data && e.response.data.message
       })
     })

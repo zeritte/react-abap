@@ -207,7 +207,7 @@ const ParticularCase = props => {
         <main>
           <Header />
           {props.particularCase ? (
-            !props.particularCase.is_active ? (
+            !props.particularCase.is_active && props.role !== 'admin' ? (
               <Typography
                 style={{ paddingTop: 20 }}
                 variant="h5"
@@ -259,7 +259,11 @@ const ParticularCase = props => {
               <CircularProgress />
             </center>
           ) : (
-            <Typography variant="subtitle1" color="error" align="center" paragraph>
+            <Typography
+              variant="subtitle1"
+              color="error"
+              align="center"
+              paragraph>
               {props.particularCaseError}
             </Typography>
           )}

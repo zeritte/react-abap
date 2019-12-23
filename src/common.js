@@ -70,7 +70,8 @@ const sectionsAdmin = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Cases', href: '/cases' },
-  { name: 'Solutions in review', href: '/solutions_in_review' }
+  { name: 'Admin', href: '/admin' },
+  { name: 'Waiting Solutions', href: '/solutions_in_review' }
 ]
 export const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -742,6 +743,156 @@ export const ApproveSolutionModal = ({
           </Button>
           <Button color="primary" onClick={handleApprove}>
             Approve
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
+
+export const DataCard = ({ card, openModal }) => {
+  const classes = useStyles()
+  return (
+    <Grid item key={card.id} xs={12} md={3}>
+      <CardActionArea onClick={() => openModal(card)}>
+        <Card className={classes.card}>
+          <div className={classes.cardDetails}>
+            <CardContent>
+              <Typography component="h2" variant="h5">
+                {card.name}
+              </Typography>
+              <Grid>
+                <Typography variant="body1" color="textSecondary">
+                  {card.description}
+                </Typography>
+              </Grid>
+              <Typography color="primary">edit or destroy</Typography>
+            </CardContent>
+          </div>
+        </Card>
+      </CardActionArea>
+    </Grid>
+  )
+}
+
+export const AddRelatedModal = ({ show, handleClose, saveFunction }) => {
+  const classes = useStyles()
+  useEffect(() => {
+    if (!show) {
+      setName('')
+      setDescription('')
+    }
+  }, [show])
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const handleSave = () => saveFunction({ name, description })
+  return (
+    <Modal aria-labelledby="title" aria-describedby="description" open={!!show}>
+      <div
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+        className={classes.paper}>
+        <h2 id="title">Add {show}</h2>
+        <TextField
+          style={{ marginTop: 20 }}
+          fullWidth
+          label="Title"
+          id="standard-required"
+          defaultValue={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <TextField
+          style={{ marginTop: 20 }}
+          multiline
+          rows={3}
+          fullWidth
+          label="Description"
+          id="standard-required"
+          defaultValue={description}
+          onChange={e => setDescription(e.target.value)}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 20,
+            justifyContent: 'space-between'
+          }}>
+          <Button color="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button color="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
+
+export const EditRelatedModal = ({
+  show,
+  handleClose,
+  saveFunction,
+  section,
+  deleteFunction
+}) => {
+  const classes = useStyles()
+  useEffect(() => {
+    setName(show.name)
+    setDescription(show.description)
+  }, [show])
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const handleSave = () => saveFunction({ name, description })
+  return (
+    <Modal aria-labelledby="title" aria-describedby="description" open={!!show}>
+      <div
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+        className={classes.paper}>
+        <h2 id="title">Update {section}</h2>
+        <TextField
+          style={{ marginTop: 20 }}
+          fullWidth
+          label="Title"
+          id="standard-required"
+          defaultValue={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <TextField
+          style={{ marginTop: 20 }}
+          multiline
+          rows={3}
+          fullWidth
+          label="Description"
+          id="standard-required"
+          defaultValue={description}
+          onChange={e => setDescription(e.target.value)}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginTop: 20,
+            justifyContent: 'space-between'
+          }}>
+          <Button color="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            color="secondary"
+            onClick={() => deleteFunction(section, show.id)}>
+            Delete
+          </Button>
+          <Button color="primary" onClick={handleSave}>
+            Save
           </Button>
         </div>
       </div>
