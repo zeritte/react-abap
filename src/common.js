@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import TextField from '@material-ui/core/TextField'
 import CardContent from '@material-ui/core/CardContent'
+import Checkbox from '@material-ui/core/Checkbox'
 import Modal from '@material-ui/core/Modal'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
@@ -899,5 +900,43 @@ export const EditRelatedModal = ({
         </div>
       </div>
     </Modal>
+  )
+}
+
+export const UserCard = ({ user, updateFunction }) => {
+  const classes = useStyles()
+  return (
+    <Grid item key={user.id} xs={12} md={6}>
+      <Card className={classes.card}>
+        <div className={classes.cardDetails}>
+          <CardContent style={{ display: 'flex', flexDirection: 'row' }}>
+            <Grid style={{ flex: 3 }}>
+              <Typography component="h2" variant="h5">
+                {user.name}
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                {user.email}
+              </Typography>
+            </Grid>
+            <Grid style={{ flex: 1 }}>
+              <FormControlLabel
+                disabled={user.role === 'admin'}
+                control={
+                  <Checkbox
+                    checked={user.role === 'editor'}
+                    onChange={e =>
+                      updateFunction({
+                        user: { role: e.target.checked ? 'editor' : 'member' }
+                      })
+                    }
+                  />
+                }
+                label="Editor"
+              />
+            </Grid>
+          </CardContent>
+        </div>
+      </Card>
+    </Grid>
   )
 }

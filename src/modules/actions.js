@@ -19,6 +19,9 @@ export const FETCH_SOLUTIONS_IN_REVIEW = 'fetch_solutions_in_review'
 export const FETCH_SOLUTIONS_IN_REVIEW_SUCCESS =
   'fetch_solutions_in_review_success'
 export const FETCH_SOLUTIONS_IN_REVIEW_FAIL = 'fetch_solutions_in_review_fail'
+export const FETCH_ALL_USERS = 'fetch_alL_users'
+export const FETCH_ALL_USERS_SUCCCESS = 'fetch_alL_users_success'
+export const FETCH_ALL_USERS_FAIL = 'fetch_alL_users_fail'
 
 export const signIn = (email, password) => dispatch => {
   dispatch({ type: SIGN_IN })
@@ -284,5 +287,40 @@ export const deleteRelatedData = (name, id, setAlert) => async (
         title: 'Could not be deleted!',
         description: e.response && e.response.data && e.response.data.message
       })
+    })
+}
+
+export const fetchAllUsers = () => async (dispatch, getState) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  dispatch({ type: FETCH_ALL_USERS })
+  axios
+    .get(API_URL + 'registrations')
+    .then(r => {
+      dispatch({
+        type: FETCH_ALL_USERS_SUCCCESS,
+        payload: r.data
+      })
+    })
+    .catch(e => {
+      dispatch({
+        type: FETCH_ALL_USERS_FAIL,
+        payload:
+          e.response && e.response.data && e.response.data.message
+            ? e.response.data.message
+            : 'Could not fetch the data. Please contact to system admin.'
+      })
+    })
+}
+
+export const updateUser = (id, params) => async (dispatch, getState) => {
+  axios.defaults.headers.common['token'] = getState().main.token
+  axios
+    .put(API_URL + 'registrations/' + id, params)
+    .then(r => {
+      console.log(r.data)
+      dispatch(fetchAllUsers())
+    })
+    .catch(e => {
+      console.log(e && e.response)
     })
 }

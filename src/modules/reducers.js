@@ -15,7 +15,10 @@ import {
   FETCH_DOMAINS_TYPES_IMPACTS,
   FETCH_SOLUTIONS_IN_REVIEW,
   FETCH_SOLUTIONS_IN_REVIEW_FAIL,
-  FETCH_SOLUTIONS_IN_REVIEW_SUCCESS
+  FETCH_SOLUTIONS_IN_REVIEW_SUCCESS,
+  FETCH_ALL_USERS,
+  FETCH_ALL_USERS_FAIL,
+  FETCH_ALL_USERS_SUCCCESS
 } from './actions'
 
 const initialState = {
@@ -40,7 +43,10 @@ const initialState = {
   impacts: [],
   solutionsInReview: null,
   solutionsInReviewLoading: false,
-  solutionsInReviewError: null
+  solutionsInReviewError: null,
+  allUsers: null,
+  allUsersLoading: false,
+  allUsersError: null
 }
 
 export default (state = initialState, action) => {
@@ -168,6 +174,23 @@ export default (state = initialState, action) => {
         ...state,
         solutionsInReviewError: action.payload,
         solutionsInReviewLoading: false
+      }
+    case FETCH_ALL_USERS:
+      return {
+        ...state,
+        allUsersLoading: true
+      }
+    case FETCH_ALL_USERS_SUCCCESS:
+      return {
+        ...state,
+        allUsers: action.payload,
+        allUsersLoading: false
+      }
+    case FETCH_ALL_USERS_FAIL:
+      return {
+        ...state,
+        allUsersError: action.payload,
+        allUsersLoading: false
       }
     default:
       return state

@@ -3,11 +3,14 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import {
   Header,
   DataCard,
   AddRelatedModal,
-  EditRelatedModal
+  EditRelatedModal,
+  UserCard
 } from '../../common'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -19,12 +22,15 @@ import {
   fetchRelatedData,
   createRelatedData,
   updateRelatedData,
-  deleteRelatedData
+  deleteRelatedData,
+  updateUser,
+  fetchAllUsers
 } from '../../modules/actions'
 
 const Admin = props => {
   useEffect(() => {
     props.fetchRelatedData()
+    props.fetchAllUsers()
   }, [])
   const [addModal, setAddModal] = useState(null)
   const [update, setUpdate] = useState(null)
@@ -117,6 +123,26 @@ const Admin = props => {
         />
       )
   }
+  const users = [
+    {
+      id: 1,
+      name: 'salih',
+      role: 'member',
+      email: 'email@mail.com'
+    },
+    {
+      id: 2,
+      name: 'kasım',
+      role: 'editor',
+      email: 'email@mail.com'
+    },
+    {
+      id: 3,
+      name: 'benli',
+      role: 'admin',
+      email: 'email@mail.com'
+    }
+  ]
   return (
     <React.Fragment>
       <CssBaseline />
@@ -125,6 +151,25 @@ const Admin = props => {
           <Header />
           <center>
             <h1>Admin Panel</h1>
+            <h2>USERS</h2>
+            {props.allUsers ? (
+              <Grid container spacing={2}>
+                {props.allUsers.map(user => (
+                  <UserCard
+                    key={user.id}
+                    user={user}
+                    updateFunction={params => props.updateUser(user.id, params)}
+                  />
+                ))}
+              </Grid>
+            ) : props.allUsersLoading ? (
+              <CircularProgress />
+            ) : (
+              <Typography variant="subtitle1" color="error" paragraph>
+                {props.allUsersError}
+              </Typography>
+            )}
+            <hr />
             {sectionRenderer('domains')}
             {sectionRenderer('impacts')}
             {sectionRenderer('types')}
@@ -143,10 +188,20 @@ const mapStateToProps = ({ main }) => ({
   isLoggedIn: main.isLoggedIn,
   domains: main.domains,
   types: main.types,
-  impacts: main.impacts
+  impacts: main.impacts,
+  allUsers: main.allUsers,
+  allUsersLoading: main.allUsersLoading,
+  allUsersError: main.allUsersError
 })
 
 export default connect(
   mapStateToProps,
-  { fetchRelatedData, createRelatedData, updateRelatedData, deleteRelatedData }
+  {
+    fetchRelatedData,
+    createRelatedData,
+    updateRelatedData,
+    deleteRelatedData,
+    updateUser,
+    fetchAllUsers
+  }
 )(Admin)
