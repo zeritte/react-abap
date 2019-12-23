@@ -37,7 +37,8 @@ const persistConfig = {
       'userId',
       'token',
       'role',
-      'name'
+      'name',
+      'isMember'
     ])
   ]
 }

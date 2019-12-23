@@ -207,7 +207,8 @@ const ParticularCase = props => {
         <main>
           <Header />
           {props.particularCase ? (
-            !props.particularCase.is_active && props.role !== 'admin' ? (
+            !props.particularCase.is_active &&
+            (props.isMember || !props.isLoggedIn) ? (
               <Typography
                 style={{ paddingTop: 20 }}
                 variant="h5"
