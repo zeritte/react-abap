@@ -12,14 +12,14 @@ import { makeStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { signIn } from '../../modules/actions'
+import backgroundImage from '../../signInBackground.jpg'
 
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100vh'
   },
   image: {
-    backgroundImage:
-      'url(https://scontent-mxp1-1.xx.fbcdn.net/v/t31.0-8/27500613_1646554072104772_7003613206792148938_o.jpg?_nc_cat=104&_nc_oc=AQn7bpU-nRwD3L-kuARx25hxWzKRTUvM6gC9ugUIE8ovMOeivcuNsjtCJl6tXub5zP8&_nc_ht=scontent-mxp1-1.xx&oh=316c28f30a848cc42b6571c9b8c3a5fe&oe=5E62D7E4)',
+    backgroundImage: `url(${backgroundImage})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center'
@@ -98,7 +98,9 @@ const SignIn = props => {
               label="Remember me"
             /> */}
             <Grid item xs>
-              <Typography style={{ color: 'darkred' }}>{props.loginError}</Typography>
+              <Typography style={{ color: 'darkred' }}>
+                {props.loginError}
+              </Typography>
             </Grid>
             <Button
               onClick={signIn}
