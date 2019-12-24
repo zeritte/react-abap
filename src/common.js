@@ -177,7 +177,8 @@ export const CaseCard = ({ vfcase }) => {
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
-                  justifyContent: 'space-around'
+                  justifyContent: 'space-around',
+                  alignItems: 'center'
                 }}>
                 <Typography
                   style={{ flex: 1 }}
