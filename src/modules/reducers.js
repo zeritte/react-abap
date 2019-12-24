@@ -93,7 +93,8 @@ export default (state = initialState, action) => {
         userId: action.payload.id,
         token: action.payload.authentication_token,
         role: action.payload.role,
-        name: action.payload.name
+        name: action.payload.name,
+        isMember: action.payload.role === 'member'
       }
     case SIGN_UP_FAIL:
       return {
