@@ -17,7 +17,9 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Switch from '@material-ui/core/Switch'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { lightTheme } from './index.js'
 import { logout } from './modules/actions'
 import { store } from './store'
 import { diff as DiffEditor } from 'react-ace'
@@ -235,8 +237,12 @@ export const AddSolutionModal = ({
           transform: 'translate(-50%, -50%)'
         }}
         className={classes.paper}>
-        <h2 id="title">Add new solution for case '{caseName}'</h2>
-        <h3 id="description">Before & After</h3>
+        <h2 id="title" style={{ color: 'white' }}>
+          Add new solution for case '{caseName}'
+        </h2>
+        <h3 id="description" style={{ color: 'white' }}>
+          Before & After
+        </h3>
         <DiffEditor
           value={code}
           onChange={e => setCode(e)}
@@ -246,11 +252,16 @@ export const AddSolutionModal = ({
           name="diff-editor"
           theme="github"
         />
-        <h3 id="footnote">Footnote</h3>
-        <CKEditor
-          editor={ClassicEditor}
-          onChange={(event, editor) => setFootnote(editor.getData())}
-        />
+        <h3 id="footnote" style={{ color: 'white' }}>
+          Footnote
+        </h3>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <CKEditor
+            editor={ClassicEditor}
+            onChange={(event, editor) => setFootnote(editor.getData())}
+          />
+        </ThemeProvider>
         <div
           style={{
             display: 'flex',
@@ -301,8 +312,12 @@ export const EditSolutionModal = ({
           transform: 'translate(-50%, -50%)'
         }}
         className={classes.paper}>
-        <h2 id="title">Edit the solution for case '{caseName}'</h2>
-        <h3 id="description">Before & After</h3>
+        <h2 id="title" style={{ color: 'white' }}>
+          Edit the solution for case '{caseName}'
+        </h2>
+        <h3 id="description" style={{ color: 'white' }}>
+          Before & After
+        </h3>
         <DiffEditor
           value={code}
           onChange={e => setCode(e)}
@@ -312,12 +327,17 @@ export const EditSolutionModal = ({
           name="diff-editor"
           theme="github"
         />
-        <h3 id="footnote">Footnote</h3>
-        <CKEditor
-          onInit={editor => editor.setData(_footnote || '')}
-          editor={ClassicEditor}
-          onChange={(event, editor) => setFootnote(editor.getData())}
-        />
+        <h3 id="footnote" style={{ color: 'white' }}>
+          Footnote
+        </h3>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <CKEditor
+            onInit={editor => editor.setData(_footnote || '')}
+            editor={ClassicEditor}
+            onChange={(event, editor) => setFootnote(editor.getData())}
+          />
+        </ThemeProvider>
         <div
           style={{
             display: 'flex',
@@ -382,8 +402,12 @@ export const AddCaseModal = ({
           transform: 'translate(-50%, -50%)'
         }}
         className={classes.paper}>
-        <h2 id="title">Add case</h2>
-        <h3 id="title-edit">Title</h3>
+        <h2 id="title" style={{ color: 'white' }}>
+          Add case
+        </h2>
+        <h3 id="title-edit" style={{ color: 'white' }}>
+          Title
+        </h3>
         <TextField
           fullWidth
           label="Title"
@@ -476,11 +500,16 @@ export const AddCaseModal = ({
             label="Is active"
           />
         </div>
-        <h3 id="desc">Description</h3>
-        <CKEditor
-          editor={ClassicEditor}
-          onChange={(event, editor) => setDescription(editor.getData())}
-        />
+        <h3 id="desc" style={{ color: 'white' }}>
+          Description
+        </h3>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <CKEditor
+            editor={ClassicEditor}
+            onChange={(event, editor) => setDescription(editor.getData())}
+          />
+        </ThemeProvider>
         <div
           style={{
             display: 'flex',
@@ -637,11 +666,14 @@ export const EditCaseModal = ({
           />
         </div>
         <h3 id="desc">Description</h3>
-        <CKEditor
-          onInit={editor => editor.setData(vf_case.content_en || '')}
-          editor={ClassicEditor}
-          onChange={(event, editor) => setDescription(editor.getData())}
-        />
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <CKEditor
+            onInit={editor => editor.setData(vf_case.content_en || '')}
+            editor={ClassicEditor}
+            onChange={(event, editor) => setDescription(editor.getData())}
+          />
+        </ThemeProvider>
         <div
           style={{
             display: 'flex',
@@ -719,8 +751,12 @@ export const ApproveSolutionModal = ({
           transform: 'translate(-50%, -50%)'
         }}
         className={classes.paper}>
-        <h2 id="title">Approval of the solution for case '{caseName}'</h2>
-        <h3 id="description">Before & After</h3>
+        <h2 id="title" style={{ color: 'white' }}>
+          Approval of the solution for case '{caseName}'
+        </h2>
+        <h3 id="description" style={{ color: 'white' }}>
+          Before & After
+        </h3>
         <DiffEditor
           value={[before, after]}
           height="300px"
@@ -729,12 +765,17 @@ export const ApproveSolutionModal = ({
           name="diff-editor"
           theme="github"
         />
-        <h3 id="footnote">Footnote</h3>
-        <CKEditor
-          onInit={editor => editor.setData(footnote || '')}
-          editor={ClassicEditor}
-          disabled
-        />
+        <h3 id="footnote" style={{ color: 'white' }}>
+          Footnote
+        </h3>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <CKEditor
+            onInit={editor => editor.setData(footnote || '')}
+            editor={ClassicEditor}
+            disabled
+          />
+        </ThemeProvider>
         <div
           style={{
             display: 'flex',

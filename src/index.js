@@ -45,6 +45,22 @@ const theme = createMuiTheme({
   }
 })
 
+export const lightTheme = createMuiTheme({
+  palette: {
+    type: 'light'
+  },
+  typography: {
+    fontFamily: 'CorporateD, Arial'
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [corporateBold]
+      }
+    }
+  }
+})
+
 const target = document.querySelector('#root')
 
 render(
