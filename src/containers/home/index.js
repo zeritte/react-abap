@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { push } from 'connected-react-router'
 import { makeStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -58,7 +57,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(6, 0)
   },
   textField: {
-    backgroundColor: 'white',
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 400
@@ -90,7 +88,6 @@ const Home = props => {
   }, [])
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="lg">
         <main>
           <Header />
@@ -108,6 +105,7 @@ const Home = props => {
                     className={classes.textField}
                     label="Search"
                     margin="normal"
+                    color="primary"
                     variant="outlined"
                     onChange={e => setSearch(e.target.value)}
                   />

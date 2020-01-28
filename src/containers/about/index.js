@@ -1,12 +1,10 @@
 import React from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import { Header } from '../../common'
 
 const About = props => {
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="lg">
         <main>
           <Header />

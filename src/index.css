@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'CorporateL';
+  src: local('CorporateALight'),
+    url(./fonts/CorporateALight.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'CorporateD';
+  src: local('CorporateADark'),
+    url(./fonts/CorporateABold.otf) format('opentype');
+}
+
 html {
   font-size: 100%;
 }
@@ -5,8 +16,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif;
+  font-family: 'CorporateD', Arial, serif;
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -115,7 +125,7 @@ button:disabled {
 
 .carousel .control-next.control-arrow:before {
   content: '';
-  border: solid #0135ad;
+  border: solid #64b5f6;
   border-width: 0 8px 8px 0;
   display: inline-block;
   padding: 14px;
@@ -125,7 +135,7 @@ button:disabled {
 
 .carousel .control-prev.control-arrow:before {
   content: '';
-  border: solid #0135ad;
+  border: solid #64b5f6;
   border-width: 0 8px 8px 0;
   display: inline-block;
   padding: 14px;
@@ -135,10 +145,10 @@ button:disabled {
 
 .carousel-status {
   font-size: 16px !important;
-  color: #000 !important;
+  color: #fff !important;
   text-shadow: none !important;
 }
 
 .dot {
-  background-color: #000 !important;
+  background-color: #fff !important;
 }

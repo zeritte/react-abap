@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
@@ -76,9 +75,10 @@ const ParticularCase = props => {
               <div
                 style={{
                   border: '1px solid',
+                  borderColor: '#424242',
                   padding: 30,
                   height: '100%',
-                  backgroundColor: 'white'
+                  backgroundColor: '#303030'
                 }}
                 key={`editor${solution.id}`}>
                 {props.userId === solution.created_by_id ? (
@@ -202,7 +202,6 @@ const ParticularCase = props => {
 
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="lg">
         <main>
           <Header />

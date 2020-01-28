@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -58,7 +57,6 @@ const SolutionsInReview = props => {
   }
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="lg">
         <main>
           <Header />
